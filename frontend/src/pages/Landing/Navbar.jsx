@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaBars } from "react-icons/fa";
+import { Link } from "react-router-dom";
 const Navbar = () => {
   const [menuOpen, setMenuopen] = useState(false);
   const handleToggles = () => {
@@ -21,8 +22,10 @@ const Navbar = () => {
         </div>
         <div className="right  flex flex-row item-center justify-center ">
           <ul className="flex ">
-            <li className="m-2">register</li>
-            <li className="m-2">signin</li>
+            <Link to="/login">
+              <li className="m-2">register</li>
+              <li className="m-2">signin</li>
+            </Link>
           </ul>
         </div>
         <div className="md:hidden flex items-center justify-end m-2">

@@ -16,7 +16,7 @@ const Hero = () => {
               effortlessly, so you can focus on your research.
             </div>
             <div className="mt-4 mb-4 text-lg md:text-2xl">
-              <Link to="/">
+              <Link to="/login">
                 <button className="mr-3 md:p-2 bg-gradient-to-r from-blue-600 via-blue-800 to-blue-950 text-white  h-10 w-32 text-sm md:text-lg md:h-16 md:w-40 rounded-lg">
                   Start Writing...
                 </button>
