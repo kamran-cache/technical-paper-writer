@@ -184,7 +184,7 @@ const AddPdf = () => {
 
         // Upload PDF to the backend
         const response = await axios.post(
-          `http://localhost:5000/api/v1/pdf/add-pdf/${id}`,
+          `http://54.84.234.156/api/v1/pdf/add-pdf/${id}`,
           formData,
           {
             headers: {
@@ -216,7 +216,7 @@ const AddPdf = () => {
     console.log(pdfId, "pdfId");
 
     try {
-      await axios.delete(`http://localhost:5000/api/v1/pdf/${id}/${pdfId}`, {
+      await axios.delete(`http://54.84.234.156/api/v1/pdf/${id}/${pdfId}`, {
         headers: { token: `Bearer ${token}` },
       });
 

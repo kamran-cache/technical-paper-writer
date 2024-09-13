@@ -123,7 +123,7 @@ const CustomPdf = () => {
       if (isValid) {
         if (id !== "undefined") {
           response = await axios.put(
-            `http://localhost:5000/api/v1/paper/${id}`,
+            `http://54.84.234.156/api/v1/paper/${id}`,
             state,
             {
               headers: { token: `Bearer ${token}` },
@@ -131,7 +131,7 @@ const CustomPdf = () => {
           );
         } else {
           response = await axios.post(
-            "http://localhost:5000/api/v1/paper/add",
+            "http://54.84.234.156/api/v1/paper/add",
             state,
             {
               headers: { token: `Bearer ${token}` },
@@ -141,7 +141,7 @@ const CustomPdf = () => {
         }
 
         const res = await axios.post(
-          "http://localhost:5000/api/v1/paper/generate",
+          "http://54.84.234.156/api/v1/paper/generate",
           state,
           {
             headers: { token: `Bearer ${token}` },

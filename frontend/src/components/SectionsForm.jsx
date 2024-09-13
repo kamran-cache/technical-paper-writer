@@ -440,7 +440,7 @@ const SectionsForm = ({ sectionIndex }) => {
         isChecked: isChecked,
       };
       const response = await axios.post(
-        `http://localhost:5000/api/v1/openai/${id}`,
+        `http://54.84.234.156/api/v1/openai/${id}`,
         formData,
         {
           headers: {

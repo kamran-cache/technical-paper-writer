@@ -8,7 +8,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <div className=" bg-white text-black   md:h-12 md:w-full flex flex-row items-center justify-between shadow-lg ">
+      <div className=" bg-white text-black   md:h-12 md:w-full flex flex-row items-center justify-between shadow-lg shadow-neutral-300 ">
         <div className="left flex flex-row item-center justify-center">
           <span className="left text-xl m-2 font-semibold">Paper Writer</span>
         </div>
@@ -23,7 +23,7 @@ const Navbar = () => {
         <div className="right  flex flex-row item-center justify-center ">
           <ul className="flex ">
             <Link to="/login">
-              <li className="m-2">register</li>
+              {/* <li className="m-2">register</li> */}
               <li className="m-2">signin</li>
             </Link>
           </ul>
