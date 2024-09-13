@@ -186,7 +186,7 @@ const PaperList = () => {
   };
 
   useEffect(() => {
-    if (!windows.localStorage.getItem("token")) {
+    if (!window.localStorage.getItem("token")) {
       navigate("/login");
     }
     getUser();
