@@ -10,7 +10,7 @@ const Navbar = () => {
     <>
       <div className=" bg-white text-black   md:h-12 md:w-full flex flex-row items-center justify-between shadow-lg ">
         <div className="left flex flex-row item-center justify-center">
-          <span className="left text-xl m-2 font-bold">Paper Writer</span>
+          <span className="left text-xl m-2 font-semibold">Paper Writer</span>
         </div>
         <div className="center hidden  flex-col items-center justify-center md:flex md:flex-row md:item-center md:justify-center">
           <ul className=" hidden md:flex flex-col md:flex-row">
