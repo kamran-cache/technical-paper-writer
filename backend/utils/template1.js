@@ -137,61 +137,61 @@ const replaceGreekLetters = (text) => {
 
   const greekLetterMap = {
     // Lowercase Greek letters
-    α: "\\alpha",
-    β: "\\beta",
-    γ: "\\gamma",
-    δ: "\\delta",
-    ε: "\\epsilon",
-    ϵ: "\\epsilon", // Alternate epsilon
-    ζ: "\\zeta",
-    η: "\\eta",
-    θ: "\\theta",
-    ϑ: "\\vartheta", // Alternate theta
-    ι: "\\iota",
-    κ: "\\kappa",
-    λ: "\\lambda",
-    μ: "\\mu",
-    ν: "\\nu",
-    ξ: "\\xi",
-    ο: "\\omicron",
-    π: "\\pi",
-    ϖ: "\\varpi", // Alternate pi
-    ρ: "\\rho",
-    ς: "\\varsigma", // Alternate sigma
-    σ: "\\sigma",
-    τ: "\\tau",
-    υ: "\\upsilon",
-    φ: "\\phi",
-    ϕ: "\\varphi", // Alternate phi
-    χ: "\\chi",
-    ψ: "\\psi",
-    ω: "\\omega",
+    α: "\\alpha ",
+    β: "\\beta ",
+    γ: "\\gamma ",
+    δ: "\\delta ",
+    ε: "\\epsilon ",
+    ϵ: "\\epsilon ", // Alternate epsilon
+    ζ: "\\zeta ",
+    η: "\\eta ",
+    θ: "\\theta ",
+    ϑ: "\\vartheta ", // Alternate theta
+    ι: "\\iota ",
+    κ: "\\kappa ",
+    λ: "\\lambda ",
+    μ: "\\mu ",
+    ν: "\\nu ",
+    ξ: "\\xi ",
+    ο: "\\omicron ",
+    π: "\\pi ",
+    ϖ: "\\varpi ", // Alternate pi
+    ρ: "\\rho ",
+    ς: "\\varsigma ", // Alternate sigma
+    σ: "\\sigma ",
+    τ: "\\tau ",
+    υ: "\\upsilon ",
+    φ: "\\phi ",
+    ϕ: "\\varphi ", // Alternate phi
+    χ: "\\chi ",
+    ψ: "\\psi ",
+    ω: "\\omega ",
 
     // Uppercase Greek letters
-    Α: "\\Alpha",
-    Β: "\\Beta",
-    Γ: "\\Gamma",
-    Δ: "\\Delta",
-    Ε: "\\Epsilon",
-    Ζ: "\\Zeta",
-    Η: "\\Eta",
-    Θ: "\\Theta",
-    Ι: "\\Iota",
-    Κ: "\\Kappa",
-    Λ: "\\Lambda",
-    Μ: "\\Mu",
-    Ν: "\\Nu",
-    Ξ: "\\Xi",
-    Ο: "\\Omicron",
-    Π: "\\Pi",
-    Ρ: "\\Rho",
-    Σ: "\\Sigma",
-    Τ: "\\Tau",
-    Υ: "\\Upsilon",
-    Φ: "\\Phi",
-    Χ: "\\Chi",
-    Ψ: "\\Psi",
-    Ω: "\\Omega",
+    Α: "\\Alpha ",
+    Β: "\\Beta ",
+    Γ: "\\Gamma ",
+    Δ: "\\Delta ",
+    Ε: "\\Epsilon ",
+    Ζ: "\\Zeta ",
+    Η: "\\Eta ",
+    Θ: "\\Theta ",
+    Ι: "\\Iota ",
+    Κ: "\\Kappa ",
+    Λ: "\\Lambda ",
+    Μ: "\\Mu ",
+    Ν: "\\Nu ",
+    Ξ: "\\Xi ",
+    Ο: "\\Omicron ",
+    Π: "\\Pi ",
+    Ρ: "\\Rho ",
+    Σ: "\\Sigma ",
+    Τ: "\\Tau ",
+    Υ: "\\Upsilon ",
+    Φ: "\\Phi ",
+    Χ: "\\Chi ",
+    Ψ: "\\Psi ",
+    Ω: "\\Omega ",
 
     // Additional symbols
     "∂": "\\partial ",
@@ -242,7 +242,7 @@ const processSectionContent = (sections) => {
 
         // console.log(paragraph.text, 123);
         // Detect equations and wrap them in LaTeX math mode
-        // Assuming equations are marked with some identifier (e.g., [equation]...[/equation])
+        // Assuming equations are marked with some identifier
         paragraph.equations = paragraph.equations.replace(
           /\[equation\](.*?)\[\/equation\]/g,
           "\\begin{equation}$1\\end{equation}"
