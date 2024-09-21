@@ -630,9 +630,7 @@ const SectionsForm = ({ sectionIndex }) => {
                     </button>
                     <button
                       className="flex items-center space-x-1"
-                      onClick={() =>
-                        handleMoveContentUp(sectionIndex, contentIndex)
-                      }
+                      onClick={() => handleMoveContentUp(contentIndex)}
                       disabled={contentIndex === 0} // Disable if it's already the first item
                     >
                       <FaArrowUp className="text-lg" />

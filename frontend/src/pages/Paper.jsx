@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import AbstractAndKeywordsForm from "../components/AbstractAndKeywords";
 import TitleAndAuthorsForm from "../components/TitleAndAuthors";
@@ -87,6 +87,9 @@ const Paper = () => {
     dispatch(setAlerts(false));
   };
 
+  // const handleSee = () => {
+  //   navigate(`pdf/${id}`);
+  // };
   return (
     <>
       {application.alerts && (

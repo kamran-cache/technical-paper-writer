@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { PDFDocument, rgb } from "pdf-lib";
 import { saveAs } from "file-saver";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import store from "../Redux/store";
 import { RiRefreshLine } from "react-icons/ri";
@@ -165,46 +165,53 @@ const CustomPdf = () => {
   };
 
   return (
-    <div className="pdf-viewer w-full">
-      <div className="toolbar w-full bg-white flex items-center justify-between p-2 border-b-2">
-        <div className="flex-1">Click on save button to apply changes</div>
-        <div className="flex items-center space-x-2">
-          <button
-            onClick={handleClick}
-            className="text-black p-2 flex bg-[#0072] items-center"
-          >
-            <RiRefreshLine className="mr-1" /> Save Paper
-          </button>
+    <>
+      <div className="pdf-viewer w-full">
+        <div className="toolbar w-full bg-white flex items-center justify-between p-2 border-b-2">
+          <div className="flex-1">Click on save button to apply changes</div>
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={handleClick}
+              className="text-black p-2 flex bg-[#0072] items-center"
+            >
+              <RiRefreshLine className="mr-1" /> Save Paper
+            </button>
+          </div>
+        </div>
+        <div className="mt-2 relative">
+          {loading && !pdfUrl && (
+            <div className="absolute mt-64 inset-0 flex justify-center items-center  bg-opacity-50 z-50">
+              <video autoPlay loop muted className="w-32 h-32 flex">
+                <source src={Loading} type="video/mp4" />
+              </video>
+            </div>
+          )}
+          {pdfUrl && (
+            <iframe
+              src={`${pdfUrl}#toolbar=1`}
+              style={{
+                width: "100%",
+                height: "calc(100vh - 4rem)",
+                transform: `scale(${zoom})`,
+                transformOrigin: "0 0",
+                border: "none",
+                textRendering: "geometricPrecision",
+                WebkitFontSmoothing: "antialiased",
+                MozOsxFontSmoothing: "grayscale",
+                zoom: zoom,
+              }}
+              frameBorder="0"
+              className="no-border mt-2"
+            />
+          )}
         </div>
       </div>
-      <div className="mt-2 relative">
-        {loading && !pdfUrl && (
-          <div className="absolute mt-64 inset-0 flex justify-center items-center  bg-opacity-50 z-50">
-            <video autoPlay loop muted className="w-32 h-32 flex">
-              <source src={Loading} type="video/mp4" />
-            </video>
-          </div>
-        )}
-        {pdfUrl && (
-          <iframe
-            src={`${pdfUrl}#toolbar=1`}
-            style={{
-              width: "100%",
-              height: "calc(100vh - 4rem)",
-              transform: `scale(${zoom})`,
-              transformOrigin: "0 0",
-              border: "none",
-              textRendering: "geometricPrecision",
-              WebkitFontSmoothing: "antialiased",
-              MozOsxFontSmoothing: "grayscale",
-              zoom: zoom,
-            }}
-            frameBorder="0"
-            className="no-border mt-2"
-          />
-        )}
-      </div>
-    </div>
+      <Link to={`/pdf/${id}`}>
+        <button className="bg-[#00072d] text-white p-2 rounded-lg">
+          Display Paper
+        </button>
+      </Link>
+    </>
   );
 };
 
