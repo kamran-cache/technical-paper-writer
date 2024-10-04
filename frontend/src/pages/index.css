@@ -1,0 +1,19 @@
+/* Transparent Scrollbar */
+.scrollbar-transparent::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-transparent::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1); /* Transparent track */
+  border-radius: 10px;
+}
+
+.scrollbar-transparent::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2); /* Semi-transparent black thumb */
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.2); /* White border to provide padding */
+}
+
+.scrollbar-transparent::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4); /* Darker on hover */
+}

@@ -19,14 +19,19 @@ app.use(bodyParser.json({ limit: "100mb" })); // Adjust the limit as needed
 
 // Increase the limit for URL-encoded payloads
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
+const corsOptions = {
+  origin: "http://http://54.84.234.156/", // Adjust this to match your frontend URL
+  methods: ["GET", "POST", "DELETE", "PUT"],
+  credentials: true,
+};
 
+app.use(cors(corsOptions));
 // routes
 const paperRoutes = require("./router/paper");
 const userRoutes = require("./router/user");
 const pdfRoutes = require("./router/pdfRouter");
 const openaiRoutes = require("./router/openaiRouter");
 
-app.use(cors());
 app.use(express.json());
 app.use("/api/v1/paper", paperRoutes);
 app.use("/api/v1/user", userRoutes);
@@ -52,5 +57,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
-// hello

@@ -206,11 +206,11 @@ const CustomPdf = () => {
           )}
         </div>
       </div>
-      <Link to={`/pdf/${id}`}>
+      {/* <Link to={`/pdf/${id}`}>
         <button className="bg-[#00072d] text-white p-2 rounded-lg">
           Display Paper
         </button>
-      </Link>
+      </Link> */}
     </>
   );
 };

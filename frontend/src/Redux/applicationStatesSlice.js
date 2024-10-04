@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   alerts: false,
   message: "",
+  loading: false,
 };
 
 const applicationStatesSlice = createSlice({
@@ -15,8 +16,12 @@ const applicationStatesSlice = createSlice({
     setMessage: (state, action) => {
       state.message = action.payload;
     },
+    setLoading: (state, action) => {
+      state.loading = action.payload;
+    },
   },
 });
 
-export const { setAlerts, setMessage } = applicationStatesSlice.actions;
+export const { setAlerts, setMessage, setLoading } =
+  applicationStatesSlice.actions;
 export default applicationStatesSlice.reducer;

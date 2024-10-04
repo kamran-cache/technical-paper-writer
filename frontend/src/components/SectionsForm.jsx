@@ -1,315 +1,3 @@
-// import React, { useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import {
-//   setSection,
-//   addSectionContent,
-//   updateSectionContent,
-//   deleteSectionContent,
-//   addNextSection,
-//   moveContentDown,
-//   moveContentUp,
-// } from "../Redux/sectionsSlice";
-// import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-// import app from "../firebase";
-// import { useParams } from "react-router-dom";
-// import axios from "axios";
-// import store from "../Redux/store";
-// import { FiEdit } from "react-icons/fi";
-// import { MdDeleteOutline } from "react-icons/md";
-// import { FaArrowUp } from "react-icons/fa6";
-// import { FaArrowDown } from "react-icons/fa6";
-
-// const SectionsForm = ({ sectionIndex }) => {
-//   const dispatch = useDispatch();
-//   const [newContentText, setNewContentText] = useState("");
-//   const [imageFile, setImageFile] = useState(null);
-//   const [imageTitle, setImageTitle] = useState("");
-//   const [uploading, setUploading] = useState(false);
-//   const [editContentIndex, setEditContentIndex] = useState(null); // For editing content
-//   const [isChecked, setIsChecked] = useState(false);
-//   const { id } = useParams();
-//   const titleofPaper = store.getState().titleAndAuthors.title;
-//   const token = window.localStorage.getItem("token");
-
-//   const section = useSelector((state) => state.sections.sections[sectionIndex]);
-//   console.log(section, "section");
-//   const handleSectionChange = (field, value) => {
-//     dispatch(setSection({ index: sectionIndex, field, value }));
-//   };
-
-//   const handleAddTextContent = () => {
-//     if (newContentText.trim()) {
-//       dispatch(
-//         addSectionContent({
-//           index: sectionIndex,
-//           content: { text: newContentText, url: "", title: "" },
-//         })
-//       );
-//       setNewContentText("");
-//     }
-//   };
-
-//   const handleAddImageContent = async () => {
-//     if (imageFile && imageTitle.trim()) {
-//       setUploading(true);
-//       try {
-//         const storage = getStorage(app);
-//         const storageRef = ref(storage, `images/${imageFile.name}`);
-//         await uploadBytes(storageRef, imageFile);
-//         const downloadURL = await getDownloadURL(storageRef);
-
-//         dispatch(
-//           addSectionContent({
-//             index: sectionIndex,
-//             content: { text: "", url: downloadURL, title: imageTitle },
-//           })
-//         );
-
-//         setImageFile(null);
-//         setImageTitle("");
-//       } catch (error) {
-//         console.error("Error uploading image:", error);
-//       } finally {
-//         setUploading(false);
-//       }
-//     }
-//   };
-
-//   const handleEditContent = (contentIndex) => {
-//     setEditContentIndex(contentIndex);
-//   };
-
-//   const handleSaveContent = (contentIndex) => {
-//     const updatedContent = section.content[contentIndex];
-//     dispatch(
-//       updateSectionContent({
-//         sectionIndex,
-//         contentIndex,
-//         field: "text",
-//         value: updatedContent.text,
-//       })
-//     );
-//     setEditContentIndex(null);
-//   };
-
-//   const handleDeleteContent = (contentIndex) => {
-//     dispatch(deleteSectionContent({ sectionIndex, contentIndex }));
-//   };
-
-//   const handleAddNextSection = (sectionIndex) => {
-//     dispatch(addNextSection({ sectionIndex: sectionIndex }));
-//   };
-
-//   const handleAI = async () => {
-//     try {
-//       const formData = {
-//         titleOfPaper: titleofPaper,
-//         content: newContentText,
-//         field: section.title.toUpperCase(),
-//         isChecked: isChecked,
-//       };
-//       console.log(formData, "data");
-//       const response = await axios.post(
-//         `http://localhost:5000/api/v1/openai/${id}`,
-//         formData,
-//         {
-//           headers: {
-//             token: `Bearer ${token}`,
-//           },
-//         }
-//       );
-//       console.log(response, "response");
-//       const cleanedText = response.data.replace(/#/g, "");
-//       setNewContentText(cleanedText);
-//       // dispatch(setAbstract(response.data));
-//     } catch (error) {
-//       console.log("error occured", error);
-//     }
-//   };
-
-//   const handleMoveContentUp = (sectionIndex, contentIndex) => {
-//     dispatch(moveContentUp({ sectionIndex, contentIndex }));
-//   };
-
-//   const handleMoveContentDown = (sectionIndex, contentIndex) => {
-//     dispatch(moveContentDown({ sectionIndex, contentIndex }));
-//   };
-//   return (
-//     <>
-//       <div className="section-item mt-4 mb-4 p-4 rounded-lg h-full w-full overflow-y-auto">
-//         <div className="flex items-end justify-end w-full ">
-//           {/* <button onClick={handleAddNextSection(sectionIndex + 1)}>
-//             Add New Section
-//           </button> */}
-//         </div>
-
-//         {/* Title Section */}
-//         <label className="block mb-2">
-//           Title:
-//           <input
-//             type="text"
-//             value={section.title}
-//             onChange={(e) => handleSectionChange("title", e.target.value)}
-//             className="block w-full shadow-neutral-400 mt-1 p-2 bg-gray-200/40 focus:outline-none shadow-md rounded-lg"
-//             placeholder="Section title"
-//           />
-//         </label>
-
-//         {/* Text Content Section */}
-//         <div className="flex flex-col items-center mt-4">
-//           <textarea
-//             value={newContentText}
-//             onChange={(e) => setNewContentText(e.target.value)}
-//             placeholder="Write or enhance your content with the help of AI.."
-//             className="block shadow-neutral-400 w-full mt-1 p-2 bg-gray-200/40 focus:outline-none shadow-md rounded-lg"
-//           />
-//           <div className="flex items-center mt-2">
-//             <input
-//               type="checkbox"
-//               id="refer-checkbox"
-//               name="abstract"
-//               value="ABSTRACT"
-//               checked={isChecked}
-//               onChange={() => setIsChecked(!isChecked)}
-//             />
-//             <label htmlFor="refer-checkbox" className="text-sm ml-2">
-//               Refer to the {section.title} from the paper uploaded.
-//             </label>
-//           </div>
-
-//           <div className="mt-3 flex space-x-2">
-//             <button
-//               className="p-2 bg-[#00072d] text-white rounded-lg "
-//               onClick={handleAddTextContent}
-//             >
-//               Add Text Content
-//             </button>
-//             <button
-//               className="p-2 shadow-neutral-400 bg-gradient-to-r from-sky-500  to-fuchsia-600 via-violet-500 text-white rounded-lg hover:bg-blue-600"
-//               onClick={handleAI}
-//             >
-//               Write with AI
-//             </button>
-//           </div>
-//         </div>
-
-//         {/* Image Upload Section */}
-//         <div className="mt-4">
-//           <label className="block mb-2">Add Image:</label>
-//           <input
-//             type="file"
-//             accept="image/*"
-//             onChange={(e) => setImageFile(e.target.files[0])}
-//             className="block w-full shadow-neutral-400 mt-1 p-2 bg-gray-200/40 focus:outline-none shadow-md rounded-lg"
-//           />
-//           <input
-//             type="text"
-//             value={imageTitle}
-//             onChange={(e) => setImageTitle(e.target.value)}
-//             placeholder="Image title"
-//             className="block shadow-neutral-400 w-full mt-2 p-2 bg-gray-200/40 focus:outline-none shadow-md rounded-lg"
-//           />
-//           <button
-//             className={`mt-2 p-2 text-white rounded-lg ${
-//               !imageFile || !imageTitle.trim() || uploading
-//                 ? "bg-gray-400 cursor-not-allowed"
-//                 : "bg-blue-500 hover:bg-blue-600"
-//             }`}
-//             onClick={handleAddImageContent}
-//             disabled={!imageFile || !imageTitle.trim() || uploading}
-//           >
-//             {uploading ? "Uploading..." : "Add Image"}
-//           </button>
-//         </div>
-
-//         {/* Existing Content Section */}
-//         <div className="mt-4">
-//           <h3 className="text-lg  font-semibold">Existing Content:</h3>
-//           {section.content.map((contentItem, contentIndex) => (
-//             <div key={contentIndex} className="mt-2 p-2 border rounded-lg">
-//               {editContentIndex === contentIndex ? (
-//                 <>
-//                   <textarea
-//                     value={contentItem.text}
-//                     onChange={(e) =>
-//                       dispatch(
-//                         updateSectionContent({
-//                           sectionIndex,
-//                           contentIndex,
-//                           field: "text",
-//                           value: e.target.value,
-//                         })
-//                       )
-//                     }
-//                     className="block shadow-neutral-400 w-full mt-1 p-2 bg-gray-200/40 focus:outline-none shadow-md rounded-lg"
-//                   />
-//                   <button
-//                     className="mt-2 p-2 shadow-neutral-400 bg-green-500 text-white rounded-lg hover:bg-green-600"
-//                     onClick={() => handleSaveContent(contentIndex)}
-//                   >
-//                     Save
-//                   </button>
-//                 </>
-//               ) : (
-//                 <>
-//                   {contentItem.text && <p>{contentItem.text}</p>}
-//                   {contentItem.url && (
-//                     <div>
-//                       <p>{contentItem.title}</p>
-//                       <img
-//                         src={contentItem.url}
-//                         alt={contentItem.title}
-//                         className="w-full h-auto mt-2"
-//                       />
-//                     </div>
-//                   )}
-//                   <div className="mt-2 flex space-x-2">
-//                     <button
-//                       className="flex items-center space-x-1 "
-//                       onClick={() => handleEditContent(contentIndex)}
-//                     >
-//                       {/* <span>Edit</span> */}
-//                       <FiEdit className="text-xl" />
-//                     </button>
-//                     <button
-//                       className="flex items-center space-x-1 "
-//                       onClick={() => handleDeleteContent(contentIndex)}
-//                     >
-//                       {/* <span>Delete</span> */}
-//                       <MdDeleteOutline className="text-2xl" />
-//                     </button>
-//                     <button
-//                       className="flex items-center space-x-1"
-//                       onClick={() =>
-//                         handleMoveContentUp(sectionIndex, contentIndex)
-//                       }
-//                       disabled={contentIndex === 0} // Disable if it's already the first item
-//                     >
-//                       <FaArrowUp className="text-lg" />
-//                     </button>
-//                     <button
-//                       className="flex items-center space-x-1"
-//                       onClick={() =>
-//                         handleMoveContentDown(sectionIndex, contentIndex)
-//                       }
-//                       disabled={contentIndex === contentItem.length - 1} // Disable if it's already the last item
-//                     >
-//                       <FaArrowDown className="text-lg" />
-//                     </button>
-//                   </div>
-//                 </>
-//               )}
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default SectionsForm;
-
-// demp2
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -321,6 +9,8 @@ import {
   moveContentDown,
   moveContentUp,
 } from "../Redux/sectionsSlice";
+import "./Section.css";
+import "./index.css";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import app from "../firebase";
 import { useParams } from "react-router-dom";
@@ -329,6 +19,13 @@ import store from "../Redux/store";
 import { FiEdit } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
+import { LuCircleDashed } from "react-icons/lu";
+import { RiShining2Line } from "react-icons/ri";
+import { FaAngleDown } from "react-icons/fa6";
+import { FiUpload } from "react-icons/fi";
+import { CiCircleCheck } from "react-icons/ci";
+import { FaPlus } from "react-icons/fa6";
+import ContentDisplay from "./ContentDisplay";
 
 const SectionsForm = ({ sectionIndex }) => {
   const dispatch = useDispatch();
@@ -342,8 +39,24 @@ const SectionsForm = ({ sectionIndex }) => {
   const { id } = useParams();
   const titleofPaper = store.getState().titleAndAuthors.title;
   const token = window.localStorage.getItem("token");
+  const [isEquationOpen, setIsEquationOpen] = useState(false);
+  const [isImageOpen, setIsImageOpen] = useState(false);
+  const [isDisplayOpen, setIsDisplayOpen] = useState(false);
+  const [editingField, setEditingField] = useState(null); // null, "text", or "equations"
 
   const section = useSelector((state) => state.sections.sections[sectionIndex]);
+  const prevSection = useSelector(
+    (state) => state.sections.sections[sectionIndex - 1]
+  );
+  const toggleEquation = () => {
+    setIsEquationOpen(!isEquationOpen);
+  };
+  const toggleImage = () => {
+    setIsImageOpen(!isImageOpen);
+  };
+  const toggleDisplay = () => {
+    setIsDisplayOpen(!isDisplayOpen);
+  };
 
   const handleSectionChange = (field, value) => {
     dispatch(setSection({ index: sectionIndex, field, value }));
@@ -358,13 +71,30 @@ const SectionsForm = ({ sectionIndex }) => {
             text: newContentText,
             url: "",
             title: "",
-            equations: newContentEquation, // Handle equations
+            equations: "", // Handle equations
           },
         })
       );
       setNewContentText("");
-      setNewContentEquation(""); // Reset equations input
+      // setNewContentEquation(""); // Reset equations input
     }
+  };
+
+  const handleAddEquationContent = () => {
+    if (newContentEquation.trim()) {
+      dispatch(
+        addSectionContent({
+          index: sectionIndex,
+          content: {
+            text: "",
+            url: "",
+            title: "",
+            equations: newContentEquation, // Handle equations
+          },
+        })
+      );
+    }
+    setNewContentEquation("");
   };
 
   const handleAddImageContent = async () => {
@@ -404,22 +134,25 @@ const SectionsForm = ({ sectionIndex }) => {
 
   const handleSaveContent = (contentIndex) => {
     const updatedContent = section.content[contentIndex];
-    dispatch(
-      updateSectionContent({
-        sectionIndex,
-        contentIndex,
-        field: "text",
-        value: updatedContent.text,
-      })
-    );
-    dispatch(
-      updateSectionContent({
-        sectionIndex,
-        contentIndex,
-        field: "equations",
-        value: updatedContent.equations, // Save updated equations
-      })
-    );
+    if (editingField === "text") {
+      dispatch(
+        updateSectionContent({
+          sectionIndex,
+          contentIndex,
+          field: "text",
+          value: updatedContent.text,
+        })
+      );
+    } else {
+      dispatch(
+        updateSectionContent({
+          sectionIndex,
+          contentIndex,
+          field: "equations",
+          value: updatedContent.equations, // Save updated equations
+        })
+      );
+    }
     setEditContentIndex(null);
   };
 
@@ -427,7 +160,8 @@ const SectionsForm = ({ sectionIndex }) => {
     dispatch(deleteSectionContent({ sectionIndex, contentIndex }));
   };
 
-  const handleAddNextSection = (sectionIndex) => {
+  const handleAddNextSection = () => {
+    console.log(sectionIndex, "Adding new section");
     dispatch(addNextSection({ sectionIndex }));
   };
 
@@ -460,195 +194,212 @@ const SectionsForm = ({ sectionIndex }) => {
   };
 
   const handleMoveContentDown = (contentIndex) => {
+    console.log("down index", contentIndex);
     dispatch(moveContentDown({ sectionIndex, contentIndex }));
   };
+  console.log("editingField", editingField);
+  console.log("contentIndex", section);
 
   return (
     <>
-      <div className="section-item mt-4 mb-4 p-4 rounded-lg h-full w-full overflow-y-auto">
-        <div className="flex items-end justify-end w-full"></div>
+      <div className="section-item   rounded-lg h-full w-full overflow-y-auto scrollbar-transparent">
+        <div className="title w-full h-12 flex items-center justify-start px-4  rounded-t-lg">
+          <CiCircleCheck className="mx-2 text-green-700 text-xl" />
 
-        {/* Title Section */}
-        <label className="block mb-2">
-          Title:
-          <input
-            type="text"
-            value={section.title}
-            onChange={(e) => handleSectionChange("title", e.target.value)}
-            className="block w-full shadow-neutral-400 mt-1 p-2 bg-gray-200/40 focus:outline-none shadow-md rounded-lg"
-            placeholder="Section title"
-          />
-        </label>
-
-        {/* Text and Equation Content Section */}
-        <div className="flex flex-col items-center mt-4">
-          <textarea
-            value={newContentText}
-            onChange={(e) => setNewContentText(e.target.value)}
-            placeholder="Write or enhance your content with the help of AI.."
-            className="block shadow-neutral-400 w-full mt-1 p-2 bg-gray-200/40 focus:outline-none shadow-md rounded-lg"
-          />
-          <textarea
-            value={newContentEquation}
-            onChange={(e) => setNewContentEquation(e.target.value)}
-            placeholder="Add equations here..."
-            className="block shadow-neutral-400 w-full mt-1 p-2 bg-gray-200/40 focus:outline-none shadow-md rounded-lg"
-          />
-          <div className="flex items-center mt-2">
-            <input
-              type="checkbox"
-              id="refer-checkbox"
-              name="abstract"
-              value="ABSTRACT"
-              checked={isChecked}
-              onChange={() => setIsChecked(!isChecked)}
-            />
-            <label htmlFor="refer-checkbox" className="text-sm ml-2">
-              Refer to the {section.title} from the paper uploaded.
-            </label>
-          </div>
-
-          <div className="mt-3 flex space-x-2">
-            <button
-              className="p-2 bg-[#00072d] text-white rounded-lg"
-              onClick={handleAddTextContent}
-            >
-              Add Text Content
-            </button>
-            <button
-              className="p-2 shadow-neutral-400 bg-gradient-to-r from-sky-500 to-fuchsia-600 via-violet-500 text-white rounded-lg hover:bg-blue-600"
-              onClick={handleAI}
-            >
-              Write with AI
-            </button>
-          </div>
+          <h1 className="text-black">
+            {sectionIndex === 0 ? "Abstract" : prevSection.title}
+          </h1>
         </div>
-
-        {/* Image Upload Section */}
-        <div className="mt-4">
-          <label className="block mb-2">Add Image:</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setImageFile(e.target.files[0])}
-            className="block w-full shadow-neutral-400 mt-1 p-2 bg-gray-200/40 focus:outline-none shadow-md rounded-lg"
-          />
-          <input
-            type="text"
-            value={imageTitle}
-            onChange={(e) => setImageTitle(e.target.value)}
-            placeholder="Image title"
-            className="block shadow-neutral-400 w-full mt-2 p-2 bg-gray-200/40 focus:outline-none shadow-md rounded-lg"
-          />
+        {/* Middle div with hover effect */}
+        <div className="relative w-full h-1 cursor-pointer">
           <button
-            className={`mt-2 p-2 text-white rounded-lg ${
-              !imageFile || !imageTitle.trim() || uploading
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-blue-500 hover:bg-blue-600"
-            }`}
-            onClick={handleAddImageContent}
-            disabled={!imageFile || !imageTitle.trim() || uploading}
+            className="add-section-button flex flex-row items-center justify-center absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white border-blue-700 border-2 text-blue-600 py-2 px-4 rounded opacity-0 hover:opacity-100 transition-opacity duration-300"
+            onClick={handleAddNextSection}
           >
-            {uploading ? "Uploading..." : "Add Image"}
+            <FaPlus className="mr-2" /> Add Section
           </button>
         </div>
+        <div className="title w-full h-12 flex items-center justify-start px-4 bg-gradient-to-r from-[#9253FF] to-[#32A8FF] ">
+          <LuCircleDashed className="mx-2 text-white" />
 
-        {/* Existing Content Section */}
-        <div className="mt-4">
-          <h3 className="text-lg font-semibold">Existing Content:</h3>
-          {section.content.map((contentItem, contentIndex) => (
-            <div key={contentIndex} className="mt-2 p-2 border rounded-lg">
-              {editContentIndex === contentIndex ? (
-                <>
-                  <textarea
-                    value={contentItem.text}
-                    onChange={(e) =>
-                      dispatch(
-                        updateSectionContent({
-                          sectionIndex,
-                          contentIndex,
-                          field: "text",
-                          value: e.target.value,
-                        })
-                      )
-                    }
-                    className="block shadow-neutral-400 w-full mt-1 p-2 bg-gray-200/40 focus:outline-none shadow-md rounded-lg"
-                  />
-                  <textarea
-                    value={contentItem.equations}
-                    onChange={(e) =>
-                      dispatch(
-                        updateSectionContent({
-                          sectionIndex,
-                          contentIndex,
-                          field: "equations",
-                          value: e.target.value,
-                        })
-                      )
-                    }
-                    className="block shadow-neutral-400 w-full mt-1 p-2 bg-gray-200/40 focus:outline-none shadow-md rounded-lg"
-                    placeholder="Add equations here..."
-                  />
-                  <button
-                    className="mt-2 p-2 shadow-neutral-400 bg-green-500 text-white rounded-lg hover:bg-green-600"
-                    onClick={() => handleSaveContent(contentIndex)}
-                  >
-                    Save
-                  </button>
-                </>
-              ) : (
-                <>
-                  {contentItem.text && <p>{contentItem.text}</p>}
-                  {contentItem.equations && (
-                    <div className="mt-2 p-2 border rounded-lg bg-gray-100">
-                      <p className="font-semibold">Equations:</p>
-                      <p>{contentItem.equations}</p>
-                    </div>
-                  )}
-                  {contentItem.url && (
-                    <div>
-                      <p>{contentItem.title}</p>
-                      <img
-                        src={contentItem.url}
-                        alt={contentItem.title}
-                        className="w-full h-auto mt-2"
-                      />
-                    </div>
-                  )}
-                  <div className="mt-2 flex space-x-2">
-                    <button
-                      className="flex items-center space-x-1 "
-                      onClick={() => handleEditContent(contentIndex)}
-                    >
-                      <FiEdit className="text-xl" />
-                    </button>
-                    <button
-                      className="flex items-center space-x-1 "
-                      onClick={() => handleDeleteContent(contentIndex)}
-                    >
-                      <MdDeleteOutline className="text-2xl" />
-                    </button>
-                    <button
-                      className="flex items-center space-x-1"
-                      onClick={() => handleMoveContentUp(contentIndex)}
-                      disabled={contentIndex === 0} // Disable if it's already the first item
-                    >
-                      <FaArrowUp className="text-lg" />
-                    </button>
-                    <button
-                      className="flex items-center space-x-1"
-                      onClick={() =>
-                        handleMoveContentDown(sectionIndex, contentIndex)
-                      }
-                      disabled={contentIndex === section.content.length - 1} // Disable if it's already the last item
-                    >
-                      <FaArrowDown className="text-lg" />
-                    </button>
-                  </div>
-                </>
-              )}
+          <h1 className="text-white">{section.title}</h1>
+        </div>
+
+        {/* Title Section */}
+        <div className="title border-2 border-[#d4d4d4] rounded-lg p-4 mt-4 mx-3">
+          <label className="block mb-2">
+            {/* Title: */}
+            <input
+              type="text"
+              value={section.title}
+              onChange={(e) => handleSectionChange("title", e.target.value)}
+              className="block w-full  mt-1 p-2  focus:outline-none  rounded-lg"
+              placeholder="Section title"
+            />
+            <hr className=" mt-1 mb-2 w-full  bg-[#d4d4d4] h-[1px]" />
+          </label>
+
+          {/* Text and Equation Content Section */}
+          <div className="flex flex-col  mt-4">
+            <label className="text-sm mb-2">Write text content</label>
+            <textarea
+              value={newContentText}
+              onChange={(e) => setNewContentText(e.target.value)}
+              placeholder="Write or enhance your content with the help of AI.."
+              className="block  w-full h-40 mt-1 p-2 border-2 border-[#d4d4d4] focus:outline-none  rounded-lg"
+            />
+
+            <div className="flex items-center mt-3">
+              <input
+                type="checkbox"
+                id="refer-checkbox"
+                name="abstract"
+                value="ABSTRACT"
+                checked={isChecked}
+                onChange={() => setIsChecked(!isChecked)}
+              />
+              <label htmlFor="refer-checkbox" className="text-sm ml-2">
+                Refer to the {section.title} from the paper uploaded.
+              </label>
             </div>
-          ))}
+
+            <div className="mt-4 flex justify-end">
+              <div className="flex flex-row items-center justify-center border-2 border-blue-800 rounded-lg text-blue-800 p-2 self-start">
+                <RiShining2Line />
+                <button className="ml-2 ttext-sm " onClick={handleAI}>
+                  Optimize with AI
+                </button>
+              </div>
+
+              <button
+                className="px-2 text-sm bg-blue-600 text-white ml-3 rounded-lg"
+                onClick={handleAddTextContent}
+              >
+                Add Content
+              </button>
+            </div>
+          </div>
+        </div>
+        {/* {Equations} */}
+        {isEquationOpen ? (
+          <>
+            <div className="equations m-3 rounded-lg p-4 flex flex-col border-2 border-[#d4d4d4]">
+              <div className="flex flex-row justify-between">
+                <label htmlFor="">Equations</label>
+                <FaAngleDown
+                  onClick={toggleEquation}
+                  className="rotate-180 cursor-pointer"
+                />
+              </div>
+              <hr className=" mt-1 mb-2 w-full  bg-[#d4d4d4] h-[1px]" />
+              <textarea
+                value={newContentEquation}
+                onChange={(e) => setNewContentEquation(e.target.value)}
+                placeholder="Add equations here..."
+                className="block  w-full mt-1 p-2  focus:outline-none border-2 border-[#d4d4d4] rounded-lg"
+              />
+              <div className="btn flex justify-end mt-4 ">
+                <button
+                  className="p-3 text-sm bg-blue-600 text-white ml-3 rounded-lg"
+                  onClick={handleAddEquationContent}
+                >
+                  Add Equation
+                </button>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="equations m-3 rounded-lg p-4 flex flex-col border-2 border-[#d4d4d4]">
+              <div className="flex flex-row justify-between">
+                <label htmlFor="">Add Equations</label>
+                <FaAngleDown
+                  onClick={toggleEquation}
+                  className="cursor-pointer"
+                />
+              </div>
+
+              <hr className=" mt-2 mb-2 w-full  bg-[#d4d4d4] h-[1px]" />
+            </div>
+          </>
+        )}
+
+        {/* Image Upload Section */}
+        {isImageOpen ? (
+          <>
+            <div className="equations m-3 rounded-lg p-4 flex flex-col border-2 border-[#d4d4d4]">
+              <div className="flex flex-row justify-between">
+                <label htmlFor="">Add Images</label>
+                <FaAngleDown
+                  onClick={toggleImage}
+                  className="rotate-180 cursor-pointer"
+                />
+              </div>
+              <hr className=" mt-2 mb-2 w-full  bg-[#d4d4d4] h-[1px]" />
+
+              {/* demo */}
+
+              <div className="flex flex-col items-center justify-center w-full border-2 border-dashed border-gray-300 p-10 mb-5 rounded-lg relative">
+                <FiUpload className="text-4xl text-blue-500 mb-2" />
+
+                <p className="text-gray-500">
+                  Drag and drop, or browse your images
+                </p>
+                <p className="text-gray-400">PDF. Max 10mb</p>
+
+                {/* Hidden File Input */}
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setImageFile(e.target.files[0])}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                />
+              </div>
+              {/* /demo  */}
+
+              {/* <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setImageFile(e.target.files[0])}
+                className="block w-full shadow-neutral-400 mt-1 p-2 bg-gray-200/40 focus:outline-none shadow-md rounded-lg"
+              /> */}
+              <input
+                type="text"
+                value={imageTitle}
+                onChange={(e) => setImageTitle(e.target.value)}
+                placeholder="Image title"
+                className="block  w-full mt-1 mb-2 p-2 border-2 border-[#d4d4d4] focus:outline-none  rounded-lg"
+              />
+              <div className="flex justify-end">
+                <button
+                  className={`mt-2 p-2 text-white rounded-lg ${
+                    !imageFile || !imageTitle.trim() || uploading
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-blue-500 hover:bg-blue-600"
+                  }`}
+                  onClick={handleAddImageContent}
+                  disabled={!imageFile || !imageTitle.trim() || uploading}
+                >
+                  {uploading ? "Uploading..." : "Add Image"}
+                </button>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="equations m-3 rounded-lg p-4 flex flex-col border-2 border-[#d4d4d4]">
+              <div className="flex flex-row justify-between">
+                <label htmlFor="">Add Image</label>
+                <FaAngleDown onClick={toggleImage} className="cursor-pointer" />
+              </div>
+
+              <hr className=" mt-2 mb-2 w-full  bg-[#d4d4d4] h-[1px]" />
+            </div>
+          </>
+        )}
+
+        <div>
+          <ContentDisplay sectionIndex={sectionIndex} />
         </div>
       </div>
     </>
