@@ -74,26 +74,26 @@ const AbstractAndKeywords = () => {
   return (
     <>
       <div className="flex flex-col h-full w-full items-center justify-center">
-        <div className="title w-full h-12 flex items-center justify-start px-4 bg-gradient-to-r from-[#9253FF] to-[#32A8FF] rounded-t-lg">
-          <LuCircleDashed className="mx-2 text-white" />
+        <div className=" w-full min-h-[58px] flex items-center justify-start px-4 bg-gradient-to-r from-[#9253FF] to-[#32A8FF] rounded-t-lg">
+          <LuCircleDashed className="mx-2 text-white text-[20px]" />
 
-          <h1 className="text-white">Abstract</h1>
+          <h1 className="text-white  text-[18px] font-medium">Abstract</h1>
         </div>
         <form
           onSubmit={(e) => e.preventDefault()} // Prevent default form submission
           className="h-full w-full overflow-y-auto flex flex-col items-start rounded-lg justify-center space-y-6 p-4"
         >
-          <div className="border-2 border-[#d4d4d4] p-4 w-full rounded-lg">
-            <label htmlFor="abstract" className="text-sm font-medium mb-2">
+          <div className="border-2 border-[#d4d4d4] p-4 w-full rounded-[16px] text-black font-medium">
+            <h1 htmlFor="abstract" className="text-sm font-medium mt-3 mb-2">
               Abstract
-            </label>
+            </h1>
             <hr className=" mt-1  w-full  bg-[#d4d4d4] h-[1px] mb-2" />
             <textarea
               id="abstract"
               placeholder="Enter abstract"
               value={abstract}
               onChange={handleAbstractChange}
-              className="p-2 border-2 border-[#d4d4d4] focus:outline-none shadow-md rounded-lg h-60 w-full"
+              className="p-2 border-2 text-[14px] font-medium border-[#d4d4d4] focus:outline-none shadow-md rounded-lg h-60 w-full"
             />
 
             {/* Checkbox */}
@@ -112,9 +112,9 @@ const AbstractAndKeywords = () => {
                   Refer to the abstract from the uploaded paper.
                 </label>
               </div>
-              <div className="flex flex-row items-center justify-center border-2 border-blue-800 rounded-lg text-blue-800 p-2 self-start">
+              <div className="flex flex-row items-center justify-center border-2 border-blue-500 rounded-lg text-blue-500 p-2 self-start hover:text-white hover:bg-gradient-to-r from-[#9253FF] to-[#32A8FF] transition-all ease-in-out duration-300 hover:border-blue-400 ">
                 <RiShining2Line />
-                <button type="button" onClick={handleAI} className=" ml-2 ">
+                <button type="button" onClick={handleAI} className=" ml-2  ">
                   Optimize with AI
                 </button>
               </div>
@@ -139,11 +139,11 @@ const AbstractAndKeywords = () => {
                     handleAddKeyword();
                   }
                 }}
-                className="p-2 border-2 border-[#d4d4d4] focus:outline-none shadow-md rounded-lg flex-grow"
+                className="p-2 border-2 border-[#d4d4d4] focus:outline-none focus:shadow-md rounded-sm flex-grow"
               />
             </div>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex mt-3 flex-wrap gap-2">
               {keywords.map((keyword, index) => (
                 <li
                   key={index}

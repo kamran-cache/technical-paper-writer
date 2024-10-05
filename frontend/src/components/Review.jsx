@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { LuCircleDashed } from "react-icons/lu";
 import { FaXmark, FaPlus } from "react-icons/fa6";
-import { MdDeleteOutline } from "react-icons/md";
+import { ImBin2 } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
+import { SiTicktick } from "react-icons/si";
 
 import {
   reorderSection,
@@ -20,7 +21,7 @@ const Review = () => {
   console.log(sections, "secttions");
   const handleDrag = (result) => {
     const { source, destination } = result;
-    if (!destination) return;
+    if (!destination || source.index === destination.index) return;
 
     const sourceIndex = source.index;
     const destinationIndex = destination.index;
@@ -87,8 +88,8 @@ const Review = () => {
               >
                 {sections.map((section, index) => (
                   <Draggable
-                    draggableId={section.title} // Ensure _id is unique
-                    key={section._id}
+                    draggableId={`${index}`} // Use index as the unique draggableId
+                    key={index}               // Use index as the unique key
                     index={index}
                   >
                     {(provided) => (
@@ -96,14 +97,15 @@ const Review = () => {
                         {...provided.dragHandleProps}
                         {...provided.draggableProps}
                         ref={provided.innerRef}
-                        className="bg-white text-black shadow-md mb-2 p-2 rounded-lg flex items-center cursor-grab"
+                        className="bg-white h-[3.5rem] border-2 border-[#9253ff]  text-black shadow-md mb-2 p-2 rounded-lg flex items-center cursor-grab"
                       >
                         <PiDotsSixVertical className="text-black text-xl mr-2" />
-                        <div className="text-sm">{section.title}</div>
-                        <MdDeleteOutline
-                          className="text-xl cursor-pointer ml-auto"
-                          onClick={() => handleDelete(index)}
-                        />
+                        <div className="text-l flex flex-row justify-center items-center gap-2"> <img src="/tick.svg"></img> {section.title}</div>
+                        <div  className="text-m h-[2rem] w-[2rem] rounded-full bg-blue-100 cursor-pointer ml-auto flex flex-row justify-center items-center hover:bg-red-100 text-blue-400 hover:text-red-400"
+                          onClick={() => handleDelete(index)}>
+                          {/* <img src="/Dustbin.svg" alt="delete"></img> */}
+                          <ImBin2/>
+                        </div>
                       </div>
                     )}
                   </Draggable>

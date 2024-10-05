@@ -25,7 +25,21 @@ import { FaAngleDown } from "react-icons/fa6";
 import { FiUpload } from "react-icons/fi";
 import { CiCircleCheck } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa6";
+
+//dragable content 
+import {
+  reorderSection,
+  addSection,
+  deleteSection,
+} from "../Redux/sectionsSlice";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { PiDotsSixVertical } from "react-icons/pi";
+
+
+
+
 const ContentDisplay = ({ sectionIndex }) => {
+
   const dispatch = useDispatch();
   const [newContentText, setNewContentText] = useState("");
   const [newContentEquation, setNewContentEquation] = useState(""); // State for new equation
@@ -43,15 +57,41 @@ const ContentDisplay = ({ sectionIndex }) => {
   const [editingField, setEditingField] = useState(null); // null, "text", or "equations"
 
   const section = useSelector((state) => state.sections.sections[sectionIndex]);
+
   const prevSection = useSelector(
     (state) => state.sections.sections[sectionIndex - 1]
   );
+
   const toggleEquation = () => {
     setIsEquationOpen(!isEquationOpen);
   };
+
   const toggleImage = () => {
     setIsImageOpen(!isImageOpen);
   };
+
+  const handleDrag = (result) => {
+    const { source, destination } = result;
+  
+    // If there is no destination or the item is dropped in the same place, return
+    if (!destination || source.index === destination.index) return;
+  
+    const sourceIndex = source.index;
+    const destinationIndex = destination.index;
+  
+    try {
+      // Ensure the action payload is correct
+      dispatch(
+        reorderSection({
+          sourceIndex,
+          destinationIndex,
+        })
+      );
+    } catch (error) {
+      console.error("Error updating order:", error);
+    }
+  };
+  
   const toggleDisplay = () => {
     setIsDisplayOpen(!isDisplayOpen);
   };
@@ -201,18 +241,41 @@ const ContentDisplay = ({ sectionIndex }) => {
     <>
       {isDisplayOpen ? (
         <>
-          <div className="m-3 p-4 rounded-lg flex flex-col border-2 border-[#d4d4d4]">
-            <div className="flex flex-row justify-between">
+          <div  className="m-3 p-4 rounded-lg flex flex-col border-2 border-[#d4d4d4]">
+            <div onClick={toggleDisplay} className="flex flex-row justify-between">
               <label htmlFor="">Arrange added content:</label>
               <FaAngleDown
-                onClick={toggleDisplay}
+                
                 className="rotate-180 cursor-pointer"
               />
             </div>
 
             <hr className="mt-2 mb-2 w-full bg-[#d4d4d4] h-[1px]" />
-            {section.content.map((contentItem, contentIndex) => (
+
+            {/* DragDropContext enables drag and drop functionality */}
+            <DragDropContext onDragEnd={handleDrag}>
+              <Droppable droppableId="ROOT" type="group">
+            {(provided) => (
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                className=""
+              >
+              {section.content.map((contentItem, contentIndex) => (
+                <Draggable
+                    draggableId={`item-${contentIndex}`}  // Use index as the unique draggableId
+                    key={contentIndex}               // Use index as the unique key
+                    index={contentIndex}
+                  >
+                  {(provided) => (
+                      <div
+                        {...provided.dragHandleProps}
+                        {...provided.draggableProps}
+                        ref={provided.innerRef}
+                        className= " cursor-grab"
+                      >
               <div key={contentIndex} className="mt-2 p-2 border rounded-lg">
+              <PiDotsSixVertical className="text-black text-xl mr-2" />
                 {editContentIndex === contentIndex ? (
                   <>
                     {/* Conditional rendering for editing equations */}
@@ -345,7 +408,7 @@ const ContentDisplay = ({ sectionIndex }) => {
 
                     {/* Display equation content */}
                     {contentItem.equations && (
-                      <div className="mt-2 p-2 border rounded-lg bg-gray-100">
+                      <div className="mt-2 p-2 border rounded-lg bg-white">
                         <p className="font-semibold">Equations:</p>
                         <p>{contentItem.equations}</p>
 
@@ -484,15 +547,22 @@ const ContentDisplay = ({ sectionIndex }) => {
                     </>
                   )}
               </div>
+              </div>
+                    )}
+              </Draggable>
             ))}
+              </div>
+          )}
+          </Droppable>
+        </DragDropContext>
           </div>
         </>
       ) : (
         <>
-          <div className="equations m-3 rounded-lg p-4 flex flex-col border-2 border-[#d4d4d4]">
+          <div onClick={toggleDisplay} className="cursor-pointer equations m-3 rounded-lg p-4 flex flex-col border-2 border-[#d4d4d4]">
             <div className="flex flex-row justify-between">
               <label htmlFor="">Arrange added content:</label>
-              <FaAngleDown onClick={toggleDisplay} className="cursor-pointer" />
+              <FaAngleDown  className="cursor-pointer" />
             </div>
             <hr className="mt-2 mb-2 w-full bg-[#d4d4d4] h-[1px]" />
           </div>

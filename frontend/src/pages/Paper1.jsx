@@ -87,10 +87,10 @@ const Paper1 = () => {
 
   useEffect(() => {
     console.log(window.localStorage.getItem("token"));
-    if (!window.localStorage.getItem("token")) {
-      // console.log()
-      navigate("/login");
-    }
+    // if (!window.localStorage.getItem("token")) {
+    //   // console.log()
+    //   navigate("/login");
+    // }
     getData();
   }, [id]);
 
@@ -216,12 +216,12 @@ const Paper1 = () => {
   return (
     <>
       <div className="main mt-2 h-[130vh] max-w-full flex flex-col bg-white scrollbar-transparent">
-        <div className="top h-48 w-full  ">
+        <div className="top h-[280px] w-full  ">
           <div className="title mt-3 ml-4 display flex flex-row items-center">
             <FaAngleLeft className="text-3xl font-semibold" />
-            <h1 className="text-2xl ml-4 font-Poppins font-bold">
+            <h3 className=" text-[32px] font-semibold font-sans ml-4">
               AI Paper Writer
-            </h1>
+            </h3>
           </div>
           <h1 className="ml-16 text-sm">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
@@ -276,13 +276,13 @@ const Paper1 = () => {
           {/* Navigation Buttons */}
           <div className="buttons flex flex-row items-start justify-between mx-12 mt-10 mb-3 w-[90%]">
             <button
-              className="border rounded-lg text-blue-500 border-blue-600 px-4 py-2"
+              className="border mt-[1rem] rounded-lg text-blue-500 border-blue-600 hover:text-white hover:bg-gradient-to-r from-[#9253FF] to-[#32A8FF] px-4 py-2 transition-all ease-in-out duration-300"
               onClick={() => handlePrev(index)}
             >
               Prev
             </button>
             <button
-              className="border rounded-lg text-blue-500 border-blue-600 px-4 py-2"
+              className=" mt-[1rem] border rounded-lg text-blue-500 border-blue-600 px-4 py-2 hover:text-white hover:bg-gradient-to-r from-[#9253FF] to-[#32A8FF] transition-all ease-in-out duration-300"
               onClick={() => handleNext(index)}
             >
               Next

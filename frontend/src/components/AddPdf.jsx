@@ -8,6 +8,7 @@ import { LuCircleDashed } from "react-icons/lu";
 import { FaPlus } from "react-icons/fa6";
 import { CiCircleCheck } from "react-icons/ci";
 import { FiUpload } from "react-icons/fi";
+import { ImBin2 } from "react-icons/im";
 
 const AddPdf = () => {
   const dispatch = useDispatch();
@@ -187,25 +188,29 @@ const AddPdf = () => {
 
     <>
       <div className="flex flex-col h-full w-full items-center">
-        <div className="title w-full h-12 flex items-center justify-start px-4 bg-gradient-to-r from-[#9253FF] to-[#32A8FF] rounded-t-lg">
+        <div className="title w-full h-[58px] flex items-center justify-start px-4 bg-gradient-to-r from-[#9253FF] to-[#32A8FF] rounded-t-lg">
           <LuCircleDashed className="mx-2 text-white" />
-          <h1 className="text-white">Referral Paper</h1>
+          <h1 className="text-white text-[18px] font-medium ">Referral Paper</h1>
         </div>
 
         <div className="flex flex-col items-center justify-center p-4 mt-4 h-full w-[90%] max-h-[400px] border-2 border-[#d4d4d4] overflow-y-auto rounded-lg relative">
           <form onSubmit={(e) => e.preventDefault()} className="w-full">
             <div className="flex flex-col  items-start">
-              <h1 className="text-lg">Add Referral Papers</h1>
+              <h1 className="text-[16px] text-black font-medium ">Add Referral Papers</h1>
               <hr className="mt-1 mb-3 w-full bg-[#d4d4d4] h-[1px]" />
             </div>
 
             {/* File Input Section */}
             <div className="flex flex-col items-center justify-center w-full border-2 border-dashed border-gray-300 p-10 mb-5 rounded-lg relative">
               <FiUpload className="text-4xl text-blue-500 mb-2" />
-              <p className="text-gray-500">
-                Drag and drop, or browse your files
-              </p>
-              <p className="text-gray-400">PDF. Max 100mb</p>
+              {pdfFile ? (
+                  <p className="text-[#30353B] mt-2 text-2 leading-[18px] tracking-[-2%]">{pdfFile.name}</p>
+                ) : (
+                  <>
+                    <p className="text-[#30353B] mt-2 text-[15px] font-normal leading-[18px] tracking-[-2%]">Drag and drop, or browse your files</p>
+                    <p className="text-[#7A7A7A] mt-2 text-[14px] font-normal leading-[18px] tracking-[-2%]">PDF. Max 100mb</p>
+                  </>
+              )}
 
               {/* Hidden File Input */}
               <input
@@ -246,12 +251,9 @@ const AddPdf = () => {
                       <CiCircleCheck className="text-xl text-green-700 mx-2 mt-[2px]" />
                       {pdfName ? pdfName : "PDF"}
                     </span>
-                    <button
-                      onClick={() => handleDelete(index)}
-                      className="text-white"
-                    >
-                      <MdDeleteOutline className="text-2xl text-neutral-700 rounded-lg hover:text-neutral-950 transition duration-200" />
-                    </button>
+                    <div onClick={() => handleDelete(index)}  className="text-m h-[2rem] w-[2rem] rounded-full bg-blue-100 cursor-pointer ml-auto flex flex-row justify-center items-center hover:bg-red-100 text-blue-400 hover:text-red-400">
+                      <ImBin2/>
+                    </div>
                   </div>
                 );
               })}

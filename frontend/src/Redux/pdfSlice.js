@@ -45,10 +45,19 @@ const pdfSlice = createSlice({
       // Expect action.payload to be an object with both link and _id
       state.pdfs.push(action.payload);
     },
+
+    // old kamran 
     deletePdf: (state, action) => {
       const index = action.payload;
       state.pdfs.splice(index, 1);
     },
+
+    // new sahil 
+    // deletePdf: (state, action) => {
+    //   const pdfId = action.payload; // We're passing the _id of the PDF as the payload
+    //   state.pdfs = state.pdfs.filter(pdf => pdf._id !== pdfId); // Remove the PDF with matching _id
+    // },
+
     setPdf: (state, action) => {
       state.pdfs = action.payload;
     },

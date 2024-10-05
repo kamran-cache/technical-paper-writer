@@ -264,7 +264,7 @@ const SectionsForm = ({ sectionIndex }) => {
             </div>
 
             <div className="mt-4 flex justify-end">
-              <div className="flex flex-row items-center justify-center border-2 border-blue-800 rounded-lg text-blue-800 p-2 self-start">
+              <div className="flex flex-row items-center justify-center border-2 border-blue-500 rounded-lg text-blue-500 hover:text-white hover:bg-gradient-to-r from-[#9253FF] to-[#32A8FF] transition-all ease-in-out duration-300 hover:border-white p-2 self-start">
                 <RiShining2Line />
                 <button className="ml-2 ttext-sm " onClick={handleAI}>
                   Optimize with AI
@@ -283,11 +283,11 @@ const SectionsForm = ({ sectionIndex }) => {
         {/* {Equations} */}
         {isEquationOpen ? (
           <>
-            <div className="equations m-3 rounded-lg p-4 flex flex-col border-2 border-[#d4d4d4]">
-              <div className="flex flex-row justify-between">
+            <div  className="equations m-3 rounded-lg p-4 flex flex-col border-2 border-[#d4d4d4]">
+              <div onClick={toggleEquation} className="flex flex-row justify-between">
                 <label htmlFor="">Equations</label>
                 <FaAngleDown
-                  onClick={toggleEquation}
+                  
                   className="rotate-180 cursor-pointer"
                 />
               </div>
@@ -310,11 +310,11 @@ const SectionsForm = ({ sectionIndex }) => {
           </>
         ) : (
           <>
-            <div className="equations m-3 rounded-lg p-4 flex flex-col border-2 border-[#d4d4d4]">
+            <div onClick={toggleEquation} className="equations m-3 rounded-lg p-4 flex flex-col border-2 border-[#d4d4d4]">
               <div className="flex flex-row justify-between">
                 <label htmlFor="">Add Equations</label>
                 <FaAngleDown
-                  onClick={toggleEquation}
+                  
                   className="cursor-pointer"
                 />
               </div>
@@ -327,11 +327,11 @@ const SectionsForm = ({ sectionIndex }) => {
         {/* Image Upload Section */}
         {isImageOpen ? (
           <>
-            <div className="equations m-3 rounded-lg p-4 flex flex-col border-2 border-[#d4d4d4]">
-              <div className="flex flex-row justify-between">
+            <div  className="equations m-3 rounded-lg p-4 flex flex-col border-2 border-[#d4d4d4]">
+              <div onClick={toggleImage} className="flex flex-row justify-between">
                 <label htmlFor="">Add Images</label>
                 <FaAngleDown
-                  onClick={toggleImage}
+                  
                   className="rotate-180 cursor-pointer"
                 />
               </div>
@@ -341,12 +341,18 @@ const SectionsForm = ({ sectionIndex }) => {
 
               <div className="flex flex-col items-center justify-center w-full border-2 border-dashed border-gray-300 p-10 mb-5 rounded-lg relative">
                 <FiUpload className="text-4xl text-blue-500 mb-2" />
+                {imageFile? (
+                    <p className="text-[#30353B] mt-2 text-2 leading-[18px] tracking-[-2%]">{imageFile.name}</p>
+                ):(
+                  <>
+                    <p className="text-[#30353B] mt-2 text-2 leading-[18px] tracking-[-2%]">
+                      Drag and drop, or browse your images
+                    </p>
+                    <p className="text-[#7A7A7A] mt-2 text-[14px] leading-[18px] tracking-[-2%]">PDF. Max 10mb</p>
+                </>
 
-                <p className="text-gray-500">
-                  Drag and drop, or browse your images
-                </p>
-                <p className="text-gray-400">PDF. Max 10mb</p>
-
+                )}
+                
                 {/* Hidden File Input */}
                 <input
                   type="file"
@@ -387,10 +393,10 @@ const SectionsForm = ({ sectionIndex }) => {
           </>
         ) : (
           <>
-            <div className="equations m-3 rounded-lg p-4 flex flex-col border-2 border-[#d4d4d4]">
+            <div onClick={toggleImage} className="equations m-3 rounded-lg p-4 flex flex-col border-2 border-[#d4d4d4]">
               <div className="flex flex-row justify-between">
                 <label htmlFor="">Add Image</label>
-                <FaAngleDown onClick={toggleImage} className="cursor-pointer" />
+                <FaAngleDown  className="cursor-pointer" />
               </div>
 
               <hr className=" mt-2 mb-2 w-full  bg-[#d4d4d4] h-[1px]" />
