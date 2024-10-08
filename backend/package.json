@@ -16,7 +16,7 @@
     "child_process": "^1.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "~4.20.0",
+    "express": "^4.21.0",
     "firebase-admin": "^12.4.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.3",
@@ -28,6 +28,6 @@
     "pdf-parse": "^1.1.1",
     "pdf2json": "^3.1.4",
     "send": "^0.19.0",
-    "serve-static": "~1.16.0"
+    "serve-static": "^1.16.2"
   }
 }
