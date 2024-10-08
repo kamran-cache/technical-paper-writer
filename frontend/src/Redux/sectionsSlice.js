@@ -129,5 +129,6 @@ export const {
   deleteSection,
   moveContentUp,
   moveContentDown,
+  reorderSectionContent,
 } = sectionsSlice.actions;
 export default sectionsSlice.reducer;
