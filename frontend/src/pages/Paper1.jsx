@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaAngleLeft } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
+
 import store from "../Redux/store";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
@@ -26,6 +27,9 @@ import {
   setLoading,
 } from "../Redux/applicationStatesSlice";
 import { FaXmark } from "react-icons/fa6";
+import { CiSettings } from "react-icons/ci";
+import { BsThreeDotsVertical } from "react-icons/bs";
+
 
 const Paper1 = () => {
   const dispatch = useDispatch();
@@ -217,11 +221,24 @@ const Paper1 = () => {
     <>
       <div className="main mt-2 h-[130vh] max-w-full flex flex-col bg-white scrollbar-transparent">
         <div className="top h-[280px] w-full  ">
-          <div className="title mt-3 ml-4 display flex flex-row items-center">
-            <FaAngleLeft className="text-3xl font-semibold" />
-            <h3 className=" text-[32px] font-semibold font-sans ml-4">
-              AI Paper Writer
-            </h3>
+          <div className="title mt-3 ml-4 display flex flex-row justify-between items-center">
+            <div className="flex flex-row items-center">
+              <FaAngleLeft className="text-3xl font-semibold" />
+              {title ? (
+                <h3 className=" text-[32px] font-semibold font-sans ml-4">
+                  {title}
+                </h3>
+              )
+              :(
+                <h3 className=" text-[32px] font-semibold font-sans ml-4">
+                  AI Paper Writer
+                </h3>
+              )}
+            </div>
+            <div className="flex flex-row mr-10 gap-4">
+               <div className="h-[36px] w-[36px] flex items-center justify-center border-[1px] border-[#D4D4D4] rounded hover:bg-blue-500 hover:text-white"><CiSettings className="text-[20px]"/></div>
+               <div className="h-[36px] w-[36px] flex items-center justify-center border-[1px] border-[#D4D4D4] rounded hover:bg-blue-500 hover:text-white"><BsThreeDotsVertical className="text-[20px]"/></div>  
+            </div>
           </div>
           <h1 className="ml-16 text-sm">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
@@ -323,7 +340,7 @@ const Paper1 = () => {
             <div className="submit fixed z-50 bottom-0  flex flex-row items-center justify-between w-1/2 h-16 bg-white">
               <h1 className="ml-4">23453 words</h1>
               <button
-                className="mr-9 rounded-lg bg-blue-600 p-2 text-white"
+                className="mr-9 rounded-lg bg-blue-500 hover:bg-blue-700 p-2 text-white"
                 onClick={handleClick}
               >
                 Save Progress

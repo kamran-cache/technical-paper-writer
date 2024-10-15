@@ -105,9 +105,7 @@ const Pdfdisplay = ({ pdfUrl, fileName }) => {
       <div className="flex flex-row justify-between items-center bg-neutral-500 z-40 sticky top-0 h-[4rem] w-full">
         {/* Display the file name or a placeholder if no file is selected */}
         <div className="ml-2 gap-2 items-center flex flex-row justify-around">
-          <div>
-            <GiHamburgerMenu />
-          </div>
+
           <div>
             {fileName
               ? fileName.length > 15

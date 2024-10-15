@@ -225,10 +225,10 @@ const AddPdf = () => {
             <button
               onClick={handleAddPdf}
               disabled={!pdfFile || uploading}
-              className={`border-2 border-gray-300 rounded-lg h-12 w-28 ${
+              className={`border-2 rounded-lg h-12 w-28 ${
                 !pdfFile || uploading
                   ? "bg-gray-200 text-gray-500"
-                  : "hover:bg-black hover:text-white"
+                  : "border-blue-500 rounded-lg text-blue-500 hover:text-white hover:bg-blue-500 transition-all ease-in-out duration-300"
               } transition duration-200 ease-in-out`}
             >
               {uploading ? "Uploading..." : "Add PDF"}

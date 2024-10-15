@@ -7,6 +7,7 @@ import { SiTicktick } from "react-icons/si";
 
 import {
   reorderSection,
+  reorderSectionContent,
   addSection,
   deleteSection,
 } from "../Redux/sectionsSlice";
@@ -19,6 +20,8 @@ const Review = () => {
   const dispatch = useDispatch();
   const sections = useSelector((state) => state.sections.sections);
   console.log(sections, "secttions");
+
+  
   const handleDrag = (result) => {
     const { source, destination } = result;
     if (!destination || source.index === destination.index) return;
