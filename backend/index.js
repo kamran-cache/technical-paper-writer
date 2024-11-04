@@ -20,7 +20,8 @@ app.use(bodyParser.json({ limit: "100mb" })); // Adjust the limit as needed
 // Increase the limit for URL-encoded payloads
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 const corsOptions = {
-  origin: "http://http://54.84.234.156/", // Adjust this to match your frontend URL
+  origin: "http://54.84.234.156/", // Adjust this to match your frontend URL
+  // origin: "http://localhost:5173",
   methods: ["GET", "POST", "DELETE", "PUT"],
   credentials: true,
 };

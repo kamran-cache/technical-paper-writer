@@ -31,6 +31,7 @@ const Login = () => {
     try {
       const response = await axios.post(
         "http://54.84.234.156/api/v1/user/login",
+        // `http://localhost:5000/api/v1/user/login`,
         credentials
       );
 

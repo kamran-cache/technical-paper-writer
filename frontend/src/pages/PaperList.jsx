@@ -24,6 +24,7 @@ const PaperList = () => {
 
       const response = await axios.get(
         "http://54.84.234.156/api/v1/user/get-user",
+        // "http://localhost:5000/api/v1/user/get-user",
         {
           headers: {
             token: `Bearer ${token}`,

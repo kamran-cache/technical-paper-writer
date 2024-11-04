@@ -26,6 +26,7 @@ import { FiUpload } from "react-icons/fi";
 import { CiCircleCheck } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa6";
 import ContentDisplay from "./ContentDisplay";
+import ContentDisplay2 from "./ContentDisplay2";
 
 const SectionsForm = ({ sectionIndex }) => {
   const dispatch = useDispatch();
@@ -264,7 +265,7 @@ const SectionsForm = ({ sectionIndex }) => {
             </div>
 
             <div className="mt-4 flex justify-end">
-              <div className="flex flex-row items-center justify-center border-2 border-blue-500 rounded-lg text-blue-500 hover:text-white hover:bg-gradient-to-r from-[#9253FF] to-[#32A8FF] transition-all ease-in-out duration-300 hover:border-white p-2 self-start">
+              <div className="flex flex-row items-center justify-center border-2 border-blue-500 rounded-lg text-blue-500 hover:text-white hover:bg-gradient-to-r from-[#9253FF] to-[#32A8FF] transition-all ease-in-out duration-700 hover:border-white p-2 self-start">
                 <RiShining2Line />
                 <button className="ml-2 ttext-sm " onClick={handleAI}>
                   Optimize with AI
@@ -272,7 +273,7 @@ const SectionsForm = ({ sectionIndex }) => {
               </div>
 
               <button
-                className="px-2 text-sm bg-blue-600 text-white ml-3 rounded-lg"
+                className="px-2 text-sm bg-blue-500 hover:bg-blue-700 text-white  ml-3 rounded-lg"
                 onClick={handleAddTextContent}
               >
                 Add Content
@@ -405,7 +406,7 @@ const SectionsForm = ({ sectionIndex }) => {
         )}
 
         <div>
-          <ContentDisplay sectionIndex={sectionIndex} />
+          <ContentDisplay2 sectionIndex={sectionIndex} />
         </div>
       </div>
     </>

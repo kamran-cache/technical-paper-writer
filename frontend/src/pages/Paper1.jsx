@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaAngleLeft } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
+import { setError } from "../Redux/applicationStatesSlice";
 import store from "../Redux/store";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
@@ -26,6 +27,8 @@ import {
   setLoading,
 } from "../Redux/applicationStatesSlice";
 import { FaXmark } from "react-icons/fa6";
+import { CiSettings } from "react-icons/ci";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 const Paper1 = () => {
   const dispatch = useDispatch();
@@ -33,11 +36,12 @@ const Paper1 = () => {
   const [pdfUrl, setPdfUrl] = useState("");
   const { id } = useParams();
   const [sections, setSections] = useState([]);
+  const [errors, setErrors] = useState("");
   const title = useSelector((state) => state.titleAndAuthors.title);
   const section = useSelector((state) => state.sections.sections);
   const application = useSelector((state) => state.application);
   const navigate = useNavigate();
-
+  const error = useSelector((state) => state.application.errors);
   const data = [
     "Title and authors",
     "Abstract and Keywords",
@@ -61,6 +65,7 @@ const Paper1 = () => {
       if (id !== "undefined") {
         const response = await axios.get(
           `http://54.84.234.156/api/v1/paper/get-paper/${id}`,
+          // `http://localhost:5000/api/v1/paper/get-paper/${id}`,
           {
             headers: { token: `Bearer ${token}` },
           }
@@ -152,6 +157,7 @@ const Paper1 = () => {
 
     return true;
   };
+
   const handleClick = async () => {
     try {
       const data = store.getState();
@@ -172,6 +178,7 @@ const Paper1 = () => {
         if (id !== "undefined") {
           response = await axios.put(
             `http://54.84.234.156/api/v1/paper/${id}`,
+            // `http://localhost:5000/api/v1/paper/${id}`,
             state,
             {
               headers: { token: `Bearer ${token}` },
@@ -180,6 +187,7 @@ const Paper1 = () => {
         } else {
           response = await axios.post(
             "http://54.84.234.156/api/v1/paper/add",
+            // "http://localhost:5000/api/v1/paper/add",
             state,
             {
               headers: { token: `Bearer ${token}` },
@@ -190,23 +198,64 @@ const Paper1 = () => {
 
         const res = await axios.post(
           "http://54.84.234.156/api/v1/paper/generate",
+          // "http://localhost:5000/api/v1/paper/generate",
           state,
           {
             headers: { token: `Bearer ${token}` },
           }
         );
-
-        const binaryData = atob(res.data.pdf);
-        const byteNumbers = new Uint8Array(binaryData.length);
-        for (let i = 0; i < binaryData.length; i++) {
-          byteNumbers[i] = binaryData.charCodeAt(i);
+        console.log(res, "res");
+        if (res.status === 200) {
+          // Handle success response
+          console.log("Document generated successfully!");
+          const binaryData = atob(res.data.pdf);
+          const byteNumbers = new Uint8Array(binaryData.length);
+          for (let i = 0; i < binaryData.length; i++) {
+            byteNumbers[i] = binaryData.charCodeAt(i);
+          }
+          const blob = new Blob([byteNumbers], { type: "application/pdf" });
+          const url = URL.createObjectURL(blob);
+          setPdfUrl(url);
+          dispatch(setLoading(false));
+          dispatch(setError(""));
+          // You can navigate to another page or display success message here
+        } else {
+          // Handle unexpected response status
+          setErrors(["Unexpected response status: " + res.status]);
+          console.log(errors, "errors");
         }
-        const blob = new Blob([byteNumbers], { type: "application/pdf" });
-        const url = URL.createObjectURL(blob);
-        setPdfUrl(url);
-        dispatch(setLoading(false));
       }
     } catch (error) {
+      // Handle error response from API
+      if (error.response) {
+        // If the server responded with a status code outside the 2xx range
+        const { message, error: errorMessage } = error.response.data;
+
+        // Display the main error message
+        if (message) {
+          setErrors([message]);
+        }
+
+        // Extract specific LaTeX errors from the response
+        const latexErrorMatch = errorMessage.match(/! LaTeX Error: .+/);
+        console.log(latexErrorMatch, "errormatch");
+        if (latexErrorMatch) {
+          let value =
+            latexErrorMatch[0] +
+            " \n So please use some other similar special character!!";
+          dispatch(setError(value));
+          dispatch(setLoading(false));
+        } else {
+          // setErrors((prevErrors) => [...prevErrors, errorMessage]); // Add the general error message if no LaTeX error found
+          dispatch(setError("Use Normal Special Characters!!!"));
+        }
+      } else if (error.request) {
+        // If the request was made but no response was received
+        setErrors(["No response from server. Please try again."]);
+      } else {
+        // Something happened in setting up the request that triggered an error
+        setErrors([error.message]);
+      }
       console.error("There was an error processing the paper!", error);
     } finally {
       setLoading(false); // Hide loader when the PDF is ready
@@ -217,11 +266,27 @@ const Paper1 = () => {
     <>
       <div className="main mt-2 h-[130vh] max-w-full flex flex-col bg-white scrollbar-transparent">
         <div className="top h-[280px] w-full  ">
-          <div className="title mt-3 ml-4 display flex flex-row items-center">
-            <FaAngleLeft className="text-3xl font-semibold" />
-            <h3 className=" text-[32px] font-semibold font-sans ml-4">
-              AI Paper Writer
-            </h3>
+          <div className="title mt-3 ml-4 display flex flex-row justify-between items-center">
+            <div className="flex flex-row items-center">
+              <FaAngleLeft className="text-3xl font-semibold" />
+              {title ? (
+                <h3 className=" text-[32px] font-semibold font-sans ml-4">
+                  {title}
+                </h3>
+              ) : (
+                <h3 className=" text-[32px] font-semibold font-sans ml-4">
+                  AI Paper Writer
+                </h3>
+              )}
+            </div>
+            <div className="flex flex-row mr-10 gap-4">
+              <div className="h-[36px] w-[36px] flex items-center justify-center border-[1px] border-[#D4D4D4] rounded hover:bg-blue-500 hover:text-white">
+                <CiSettings className="text-[20px]" />
+              </div>
+              <div className="h-[36px] w-[36px] flex items-center justify-center border-[1px] border-[#D4D4D4] rounded hover:bg-blue-500 hover:text-white">
+                <BsThreeDotsVertical className="text-[20px]" />
+              </div>
+            </div>
           </div>
           <h1 className="ml-16 text-sm">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
@@ -323,7 +388,7 @@ const Paper1 = () => {
             <div className="submit fixed z-50 bottom-0  flex flex-row items-center justify-between w-1/2 h-16 bg-white">
               <h1 className="ml-4">23453 words</h1>
               <button
-                className="mr-9 rounded-lg bg-blue-600 p-2 text-white"
+                className="mr-9 rounded-lg bg-blue-500 hover:bg-blue-700 p-2 text-white"
                 onClick={handleClick}
               >
                 Save Progress

@@ -83,7 +83,7 @@ const AbstractAndKeywords = () => {
           onSubmit={(e) => e.preventDefault()} // Prevent default form submission
           className="h-full w-full overflow-y-auto flex flex-col items-start rounded-lg justify-center space-y-6 p-4"
         >
-          <div className="border-2 border-[#d4d4d4] p-4 w-full rounded-[16px] text-black font-medium">
+          <div className="border-2 mt-10 border-[#d4d4d4] p-4 w-full rounded-[16px] text-black font-medium">
             <h1 htmlFor="abstract" className="text-sm font-medium mt-3 mb-2">
               Abstract
             </h1>
@@ -93,7 +93,7 @@ const AbstractAndKeywords = () => {
               placeholder="Enter abstract"
               value={abstract}
               onChange={handleAbstractChange}
-              className="p-2 border-2 text-[14px] font-medium border-[#d4d4d4] focus:outline-none shadow-md rounded-lg h-60 w-full"
+              className="p-2 border-2 text-[14px] font-medium border-[#d4d4d4] focus:shadow-md rounded-lg h-60 w-full"
             />
 
             {/* Checkbox */}
@@ -123,7 +123,7 @@ const AbstractAndKeywords = () => {
 
           {/* Keywords */}
           <div className="flex flex-col w-full  border-2 border-[#d4d4d4] rounded-lg p-4">
-            <label htmlFor="keywords" className="text-sm font-medium">
+            <label htmlFor="keywords" className="text-[16px] text-black font-medium">
               Keywords
             </label>
             <hr className=" mt-1  w-full  bg-[#d4d4d4] h-[1px] mb-4" />
@@ -139,7 +139,7 @@ const AbstractAndKeywords = () => {
                     handleAddKeyword();
                   }
                 }}
-                className="p-2 border-2 border-[#d4d4d4] focus:outline-none focus:shadow-md rounded-sm flex-grow"
+                className="p-2 border-2 border-[#d4d4d4] focus:shadow-md rounded-sm flex-grow"
               />
             </div>
 
@@ -147,7 +147,7 @@ const AbstractAndKeywords = () => {
               {keywords.map((keyword, index) => (
                 <li
                   key={index}
-                  className="flex  bg-[#EEF1FF] px-3 py-1 rounded-lg"
+                  className="flex  bg-[#EEF1FF] text-[15px] text-black font-medium px-3 py-1 rounded-lg"
                 >
                   <span>{keyword}</span>
                   <button

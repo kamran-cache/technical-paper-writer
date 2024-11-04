@@ -33,7 +33,7 @@ const Pdfdisplay = ({ pdfUrl, fileName }) => {
   const [scale, setScale] = useState(1.0); // Zoom level state
   const pagesRef = useRef([]); // Ref to store page heights
   const loading = useSelector((state) => state.application.loading);
-
+  const error = useSelector((state) => state.application.errors);
   // Update the file state when pdfUrl changes
   useEffect(() => {
     setFile(pdfUrl); // Set the file state to the provided pdfUrl
@@ -106,9 +106,6 @@ const Pdfdisplay = ({ pdfUrl, fileName }) => {
         {/* Display the file name or a placeholder if no file is selected */}
         <div className="ml-2 gap-2 items-center flex flex-row justify-around">
           <div>
-            <GiHamburgerMenu />
-          </div>
-          <div>
             {fileName
               ? fileName.length > 15
                 ? `${fileName.substring(0, 15)}...`
@@ -163,6 +160,13 @@ const Pdfdisplay = ({ pdfUrl, fileName }) => {
           className="flex flex-col justify-center items-center"
           ref={setContainerRef}
         >
+          {error && (
+            <div className="absolute inset-0  flex justify-center items-center  ">
+              <div className=" text-black bg-red-300  p-2 w-[70%]  ">
+                {error}
+              </div>
+            </div>
+          )}
           {loading && !pdfUrl && (
             <div className="absolute  inset-0 flex justify-center items-center  bg-opacity-50 z-50">
               <video autoPlay loop muted className="w-32 h-32 flex">

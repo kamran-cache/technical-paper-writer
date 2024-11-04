@@ -246,6 +246,71 @@ module.exports.deletePaper = async (req, res) => {
 
 // ----------------------------Demo2---------------------------------------
 
+// exports.generatePaper = async (req, res) => {
+//   try {
+//     const user = req.user.userId;
+//     const data = req.body;
+//     console.log("data", data);
+//     const latexContent = await Paper(data, user);
+//     const paperPath = path.join(__dirname, `../${user}.tex`);
+//     fs.writeFileSync(paperPath, latexContent);
+
+//     await compileLatex(paperPath, user);
+
+//     const pdfPath = path.join(__dirname, `../${user}.pdf`);
+//     const logPath = path.join(__dirname, `../${user}.log`);
+//     const auxPath = path.join(__dirname, `../${user}.aux`);
+//     const imgPath = path.join(__dirname, `../${user}`);
+//     const pdfBuffer = fs.readFileSync(pdfPath);
+//     const base64PDF = pdfBuffer.toString("base64");
+//     res.json({ pdf: base64PDF });
+
+//     res.on("finish", () => {
+//       // Delete files after the response is sent
+//       fs.unlink(pdfPath, (err) => {
+//         if (err) {
+//           console.error(`Error deleting PDF file: ${err}`);
+//         } else {
+//           console.log(`PDF file ${pdfPath} deleted successfully.`);
+//         }
+//       });
+//       fs.unlink(paperPath, (err) => {
+//         if (err) {
+//           console.error(`Error deleting PDF file: ${err}`);
+//         } else {
+//           console.log(`paper  file ${pdfPath} deleted successfully.`);
+//         }
+//       });
+//       fs.unlink(logPath, (err) => {
+//         if (err) {
+//           console.error(`Error deleting log file: ${err}`);
+//         } else {
+//           console.log(`Log file ${logPath} deleted successfully.`);
+//         }
+//       });
+//       fs.unlink(auxPath, (err) => {
+//         if (err) {
+//           console.error(`Error deleting aux file: ${err}`);
+//         } else {
+//           console.log(`Aux file ${auxPath} deleted successfully.`);
+//         }
+//       });
+
+//       // Delete the image directory and its contents
+//       fs.rm(imgPath, { recursive: true, force: true }, (err) => {
+//         if (err) {
+//           console.error(`Error deleting images directory: ${err}`);
+//         } else {
+//           console.log(`Images directory deleted successfully.`);
+//         }
+//       });
+//     });
+//   } catch (error) {
+//     console.error("Error compiling LaTeX document", error);
+//     res.status(500).send("Error compiling LaTeX document");
+//   }
+// };
+
 exports.generatePaper = async (req, res) => {
   try {
     const user = req.user.userId;
@@ -255,8 +320,9 @@ exports.generatePaper = async (req, res) => {
     const paperPath = path.join(__dirname, `../${user}.tex`);
     fs.writeFileSync(paperPath, latexContent);
 
-    await compileLatex(paperPath, user);
-
+    // Await the compileLatex function and handle errors if any occur
+    const val = await compileLatex(paperPath, user);
+    console.log(val, "val");
     const pdfPath = path.join(__dirname, `../${user}.pdf`);
     const logPath = path.join(__dirname, `../${user}.log`);
     const auxPath = path.join(__dirname, `../${user}.aux`);
@@ -276,9 +342,9 @@ exports.generatePaper = async (req, res) => {
       });
       fs.unlink(paperPath, (err) => {
         if (err) {
-          console.error(`Error deleting PDF file: ${err}`);
+          console.error(`Error deleting .tex file: ${err}`);
         } else {
-          console.log(`paper  file ${pdfPath} deleted successfully.`);
+          console.log(`.tex file ${paperPath} deleted successfully.`);
         }
       });
       fs.unlink(logPath, (err) => {
@@ -307,6 +373,6 @@ exports.generatePaper = async (req, res) => {
     });
   } catch (error) {
     console.error("Error compiling LaTeX document", error);
-    res.status(500).send("Error compiling LaTeX document");
+    res.status(500).json({ message: "Error compiling LaTeX document", error });
   }
 };

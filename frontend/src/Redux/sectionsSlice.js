@@ -4,23 +4,23 @@ const initialState = {
   sections: [
     {
       title: "Introduction",
-      content: [{ text: "", url: "", title: "", equations: "" }],
+      content: [],
     },
     {
       title: "Methodology",
-      content: [{ text: "", url: "", title: "", equations: "" }],
+      content: [],
     },
     {
       title: "Background and Related Work",
-      content: [{ text: "", url: "", title: "", equations: "" }],
+      content: [],
     },
     {
       title: "Conclusion and Future Work",
-      content: [{ text: "", url: "", title: "", equations: "" }],
+      content: [],
     },
     {
       title: "References",
-      content: [{ text: "", url: "", title: "", equations: "" }],
+      content: [],
     },
   ],
 };
