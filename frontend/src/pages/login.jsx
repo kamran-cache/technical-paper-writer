@@ -30,7 +30,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://54.84.234.156/api/v1/user/login",
+        "http://18.206.56.55/api/v1/user/login",
         // `http://localhost:5000/api/v1/user/login`,
         credentials
       );
@@ -53,7 +53,7 @@ const Login = () => {
     }
     try {
       const response = await axios.post(
-        "http://54.84.234.156/api/v1/user/signup",
+        "http://18.206.56.55/api/v1/user/signup",
         registerCredentials
       );
 

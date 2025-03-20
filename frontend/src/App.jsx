@@ -28,7 +28,8 @@ function App() {
           <Route exact path="/pdf/:id" element={<Navigationlink />}></Route>
           <Route exact path="/pdfdisplay/" element={<Pdfdisplay />}></Route>
 
-          <Route exact path="/" element={<Main />}></Route>
+          <Route exact path="/main" element={<Main />}></Route>
+          <Route exact path="/" element={<Login />}></Route>
         </Routes>
       </Router>
     </>

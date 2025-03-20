@@ -20,7 +20,7 @@ app.use(bodyParser.json({ limit: "100mb" })); // Adjust the limit as needed
 // Increase the limit for URL-encoded payloads
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 const corsOptions = {
-  origin: "http://54.84.234.156/", // Adjust this to match your frontend URL
+  origin: "http://18.206.56.55/", // Adjust this to match your frontend URL
   // origin: "http://localhost:5173",
   methods: ["GET", "POST", "DELETE", "PUT"],
   credentials: true,
@@ -34,10 +34,10 @@ const pdfRoutes = require("./router/pdfRouter");
 const openaiRoutes = require("./router/openaiRouter");
 
 app.use(express.json());
-app.use("/api/v1/paper", paperRoutes);
-app.use("/api/v1/user", userRoutes);
-app.use("/api/v1/pdf", pdfRoutes);
-app.use("/api/v1/openai", openaiRoutes);
+app.use("/v1/paper", paperRoutes);
+app.use("/v1/user", userRoutes);
+app.use("/v1/pdf", pdfRoutes);
+app.use("/v1/openai", openaiRoutes);
 
 // Static files
 // const _dirname = path.dirname("");

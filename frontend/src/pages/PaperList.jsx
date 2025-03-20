@@ -23,7 +23,7 @@ const PaperList = () => {
       }
 
       const response = await axios.get(
-        "http://54.84.234.156/api/v1/user/get-user",
+        "http://18.206.56.55/api/v1/user/get-user",
         // "http://localhost:5000/api/v1/user/get-user",
         {
           headers: {
@@ -61,7 +61,7 @@ const PaperList = () => {
     try {
       console.log(paperId, "id");
       const response = await axios.delete(
-        `http://54.84.234.156/api/v1/paper/${paperId}`,
+        `http://18.206.56.55/api/v1/paper/${paperId}`,
         {
           headers: {
             token: `Bearer ${window.localStorage.getItem("token")}`,

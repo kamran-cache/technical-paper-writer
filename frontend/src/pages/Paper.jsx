@@ -48,7 +48,7 @@ const Paper = () => {
       console.log(id);
       if (id !== "undefined") {
         const response = await axios.get(
-          `http://54.84.234.156/api/v1/paper/get-paper/${id}`,
+          `http://18.206.56.55/api/v1/paper/get-paper/${id}`,
           // `http://localhost:5000/api/v1/paper/get-paper/${id}`,
           {
             headers: { token: `Bearer ${token}` },

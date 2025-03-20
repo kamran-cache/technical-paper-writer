@@ -64,7 +64,7 @@ const Paper1 = () => {
       console.log(id);
       if (id !== "undefined") {
         const response = await axios.get(
-          `http://54.84.234.156/api/v1/paper/get-paper/${id}`,
+          `http://18.206.56.55/api/v1/paper/get-paper/${id}`,
           // `http://localhost:5000/api/v1/paper/get-paper/${id}`,
           {
             headers: { token: `Bearer ${token}` },
@@ -177,7 +177,7 @@ const Paper1 = () => {
       if (isValid) {
         if (id !== "undefined") {
           response = await axios.put(
-            `http://54.84.234.156/api/v1/paper/${id}`,
+            `http://18.206.56.55/api/v1/paper/${id}`,
             // `http://localhost:5000/api/v1/paper/${id}`,
             state,
             {
@@ -186,7 +186,7 @@ const Paper1 = () => {
           );
         } else {
           response = await axios.post(
-            "http://54.84.234.156/api/v1/paper/add",
+            "http://18.206.56.55/api/v1/paper/add",
             // "http://localhost:5000/api/v1/paper/add",
             state,
             {
@@ -197,7 +197,7 @@ const Paper1 = () => {
         }
 
         const res = await axios.post(
-          "http://54.84.234.156/api/v1/paper/generate",
+          "http://18.206.56.55/api/v1/paper/generate",
           // "http://localhost:5000/api/v1/paper/generate",
           state,
           {

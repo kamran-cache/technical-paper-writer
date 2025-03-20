@@ -57,7 +57,7 @@ const AbstractAndKeywords = () => {
       };
       console.log(formData, "data");
       const response = await axios.post(
-        `http://54.84.234.156/api/v1/openai/${id}`,
+        `http://18.206.56.55/api/v1/openai/${id}`,
         formData,
         {
           headers: {
@@ -123,7 +123,10 @@ const AbstractAndKeywords = () => {
 
           {/* Keywords */}
           <div className="flex flex-col w-full  border-2 border-[#d4d4d4] rounded-lg p-4">
-            <label htmlFor="keywords" className="text-[16px] text-black font-medium">
+            <label
+              htmlFor="keywords"
+              className="text-[16px] text-black font-medium"
+            >
               Keywords
             </label>
             <hr className=" mt-1  w-full  bg-[#d4d4d4] h-[1px] mb-4" />
