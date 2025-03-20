@@ -40,20 +40,20 @@ app.use("/api/v1/pdf", pdfRoutes);
 app.use("/api/v1/openai", openaiRoutes);
 
 // Static files
-const _dirname = path.dirname("");
-const buildPath = path.join(_dirname, "../frontend/dist");
-app.use(express.static(buildPath));
+// const _dirname = path.dirname("");
+// const buildPath = path.join(_dirname, "../frontend/dist");
+// app.use(express.static(buildPath));
 
-app.get("/*", function (req, res) {
-  res.sendFile(
-    path.join(__dirname, "../frontend/dist/index.html"),
-    function (err) {
-      if (err) {
-        res.status(500).send(err);
-      }
-    }
-  );
-});
+// app.get("/*", function (req, res) {
+//   res.sendFile(
+//     path.join(__dirname, "../frontend/dist/index.html"),
+//     function (err) {
+//       if (err) {
+//         res.status(500).send(err);
+//       }
+//     }
+//   );
+// });
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
