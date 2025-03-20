@@ -43,10 +43,10 @@ app.use((req, res, next) => {
   next(); // Pass request to next middleware
 });
 
-app.use("/v1/paper", paperRoutes);
-app.use("/v1/user", userRoutes);
-app.use("/v1/pdf", pdfRoutes);
-app.use("/v1/openai", openaiRoutes);
+app.use("/api/v1/paper", paperRoutes);
+app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/pdf", pdfRoutes);
+app.use("/api/v1/openai", openaiRoutes);
 
 // Server Start
 const PORT = process.env.PORT || 5000;
