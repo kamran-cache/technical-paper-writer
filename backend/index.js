@@ -30,6 +30,19 @@ const userRoutes = require("./router/user");
 const pdfRoutes = require("./router/pdfRouter");
 const openaiRoutes = require("./router/openaiRouter");
 
+app.use((req, res, next) => {
+  console.log("🔹 Incoming Request:");
+  console.log("➡️ Method:", req.method);
+  console.log("➡️ URL:", req.originalUrl);
+  console.log("➡️ Headers:", req.headers);
+
+  if (req.method !== "GET") {
+    console.log("➡️ Body:", req.body); // Only log body for non-GET requests
+  }
+
+  next(); // Pass request to next middleware
+});
+
 app.use("/v1/paper", paperRoutes);
 app.use("/v1/user", userRoutes);
 app.use("/v1/pdf", pdfRoutes);
