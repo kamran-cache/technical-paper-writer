@@ -36,7 +36,7 @@ const openaiRoutes = require("./router/openaiRouter");
 
 app.use(express.json());
 app.use("/v1/paper", paperRoutes);
-app.use("/v1/user", userRoutes);
+app.use("v1/user", userRoutes);
 app.use("/v1/pdf", pdfRoutes);
 app.use("/v1/openai", openaiRoutes);
 
