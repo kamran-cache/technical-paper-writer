@@ -23,7 +23,7 @@ const PaperList = () => {
       }
 
       const response = await axios.get(
-        "http://18.206.56.55/api/v1/user/get-user",
+        "http://tpw.smartimmigrant.ai/api/v1/user/get-user",
         // "http://localhost:5000/api/v1/user/get-user",
         {
           headers: {
@@ -61,7 +61,7 @@ const PaperList = () => {
     try {
       console.log(paperId, "id");
       const response = await axios.delete(
-        `http://18.206.56.55/api/v1/paper/${paperId}`,
+        `http://tpw.smartimmigrant.ai/api/v1/paper/${paperId}`,
         {
           headers: {
             token: `Bearer ${window.localStorage.getItem("token")}`,

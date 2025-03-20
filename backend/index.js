@@ -20,8 +20,9 @@ app.use(bodyParser.json({ limit: "100mb" })); // Adjust the limit as needed
 // Increase the limit for URL-encoded payloads
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 const corsOptions = {
-  origin: "http://18.206.56.55/", // Adjust this to match your frontend URL
+  // origin: "http://tpw.smartimmigrant.ai/", // Adjust this to match your frontend URL
   // origin: "http://localhost:5173",
+  origin: "http://tpw.smartimmigrant.ai/",
   methods: ["GET", "POST", "DELETE", "PUT"],
   credentials: true,
 };

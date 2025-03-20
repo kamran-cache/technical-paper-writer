@@ -57,7 +57,7 @@ const AbstractAndKeywords = () => {
       };
       console.log(formData, "data");
       const response = await axios.post(
-        `http://18.206.56.55/api/v1/openai/${id}`,
+        `http://tpw.smartimmigrant.ai/api/v1/openai/${id}`,
         formData,
         {
           headers: {
