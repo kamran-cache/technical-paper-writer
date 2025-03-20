@@ -42,6 +42,7 @@ const signup = async (req, res) => {
 // Login a user
 const login = async (req, res) => {
   const { email, password } = req.body;
+  console.log(email, "user");
 
   try {
     // Check if the user exists
