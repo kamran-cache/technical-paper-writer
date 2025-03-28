@@ -19,7 +19,11 @@ app.use(express.urlencoded({ limit: "100mb", extended: true })); // URL-encoded 
 
 // CORS Configuration
 const corsOptions = {
-  origin: ["http://tpw.smartimmigrant.ai", "http://localhost:5173"], // Allow frontend URLs
+  origin: [
+    "https://tpw.smartimmigrant.ai",
+    //  "http://localhost:5173",
+    "https://app.smartimmigrant.ai/",
+  ], // Allow frontend URLs
   methods: ["GET", "POST", "DELETE", "PUT"],
   credentials: true,
 };
