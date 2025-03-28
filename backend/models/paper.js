@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { paperDB } = require("../db");
 
 const paperSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "Users", required: true },
@@ -41,6 +42,6 @@ const paperSchema = new mongoose.Schema({
   pdfs: { type: mongoose.Schema.Types.ObjectId, ref: "Pdf" },
 });
 
-const Papers = mongoose.model("Papers", paperSchema);
+const Papers = paperDB.model("Papers", paperSchema);
 
 module.exports = Papers;

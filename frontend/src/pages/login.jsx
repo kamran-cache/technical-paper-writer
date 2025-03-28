@@ -30,8 +30,8 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://tpw.smartimmigrant.ai/api/v1/user/login",
-        // `http://localhost:5000/api/v1/user/login`,
+        // "http://tpw.smartimmigrant.ai/api/v1/user/login",
+        `http://localhost:5000/api/v1/user/login`,
         credentials
       );
 
@@ -53,7 +53,8 @@ const Login = () => {
     }
     try {
       const response = await axios.post(
-        "http://tpw.smartimmigrant.ai/api/v1/user/signup",
+        // "http://tpw.smartimmigrant.ai/api/v1/user/signup",
+        "http://localhost:5000/api/v1/user/signup",
         registerCredentials
       );
 

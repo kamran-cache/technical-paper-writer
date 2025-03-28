@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Users = require("../models/users");
+const Paper = require("../models/paper");
 const SECRET_KEY = "CacheLabs112323"; // Change this to your secret key
 
 // Register a new user
@@ -76,14 +77,33 @@ const getUser = async (req, res) => {
   const userId = req.user.userId;
 
   try {
-    if (!userId) return res.status(401).json("User not found!! ");
-    const user = await Users.findById(userId)
-      .select("-password")
-      .populate("papers");
-    console.log(user, 123);
-    return res.status(200).json(user);
+    if (!userId) return res.status(401).json({ message: "User not found!!" });
+
+    // Fetch user data (excluding password)
+    const user = await Users.findById(userId).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found!!" });
+
+    // Fetch papers from paperDB
+    const papers = await Paper.find({ _id: { $in: user.papers } });
+
+    // Extract only necessary fields from papers
+    const paperData = papers.map((paper) => ({
+      title: paper.titleAndAuthors.title,
+      _id: paper._id,
+    }));
+
+    // Construct response object
+    const data = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      papers: paperData,
+    };
+
+    console.log(data, 123);
+    return res.status(200).json(data);
   } catch (error) {
-    return res.status(500).json({ "error in finding user": error });
+    return res.status(500).json({ message: "Error in finding user", error });
   }
 };
 

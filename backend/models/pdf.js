@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const { paperDB } = require("../db");
 const pdfSchema = new mongoose.Schema({
   paperId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -19,5 +19,5 @@ const pdfSchema = new mongoose.Schema({
   ],
 });
 
-const Pdf = mongoose.model("Pdf", pdfSchema);
+const Pdf = paperDB.model("Pdf", pdfSchema);
 module.exports = Pdf;

@@ -64,8 +64,8 @@ const Paper1 = () => {
       console.log(id);
       if (id !== "undefined") {
         const response = await axios.get(
-          `http://tpw.smartimmigrant.ai/api/v1/paper/get-paper/${id}`,
-          // `http://localhost:5000/api/v1/paper/get-paper/${id}`,
+          // `http://tpw.smartimmigrant.ai/api/v1/paper/get-paper/${id}`,
+          `http://localhost:5000/api/v1/paper/get-paper/${id}`,
           {
             headers: { token: `Bearer ${token}` },
           }
@@ -177,8 +177,8 @@ const Paper1 = () => {
       if (isValid) {
         if (id !== "undefined") {
           response = await axios.put(
-            `http://tpw.smartimmigrant.ai/api/v1/paper/${id}`,
-            // `http://localhost:5000/api/v1/paper/${id}`,
+            // `http://tpw.smartimmigrant.ai/api/v1/paper/${id}`,
+            `http://localhost:5000/api/v1/paper/${id}`,
             state,
             {
               headers: { token: `Bearer ${token}` },
@@ -186,8 +186,8 @@ const Paper1 = () => {
           );
         } else {
           response = await axios.post(
-            "http://tpw.smartimmigrant.ai/api/v1/paper/add",
-            // "http://localhost:5000/api/v1/paper/add",
+            // "http://tpw.smartimmigrant.ai/api/v1/paper/add",
+            "http://localhost:5000/api/v1/paper/add",
             state,
             {
               headers: { token: `Bearer ${token}` },
@@ -197,8 +197,8 @@ const Paper1 = () => {
         }
 
         const res = await axios.post(
-          "http://tpw.smartimmigrant.ai/api/v1/paper/generate",
-          // "http://localhost:5000/api/v1/paper/generate",
+          // "http://tpw.smartimmigrant.ai/api/v1/paper/generate",
+          "http://localhost:5000/api/v1/paper/generate",
           state,
           {
             headers: { token: `Bearer ${token}` },
@@ -264,7 +264,7 @@ const Paper1 = () => {
 
   return (
     <>
-      <div className="main mt-2 h-[130vh] max-w-full flex flex-col bg-white scrollbar-transparent">
+      <div className="main bg-red-300 mt-2 h-[130vh] max-w-full flex flex-col  scrollbar-transparent">
         <div className="top h-[280px] w-full  ">
           <div className="title mt-3 ml-4 display flex flex-row justify-between items-center">
             <div className="flex flex-row items-center">
@@ -371,7 +371,7 @@ const Paper1 = () => {
             </div>
           </>
         )}
-        <div className="bottom  flex flex-row  h-full ">
+        <div className="bottom   flex flex-row  h-full ">
           <div className="left flex flex-col justify-between rounded-lg h-[100%] w-1/2 bg-[#F3F4F7]">
             <div className="form h-[40rem] w-[90%] mx-10  my-6 bg-white rounded-lg">
               {index === 0 && <TitleAndAuthorsForm />}

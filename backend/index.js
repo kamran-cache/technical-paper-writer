@@ -5,12 +5,13 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 dotenv.config({ path: "./config.env" });
 const path = require("path");
+const { paperDB, profileDB } = require("./db");
 
 // Database connection
-mongoose
-  .connect(process.env.DB)
-  .then(() => console.log("✅ Database connected successfully!"))
-  .catch((err) => console.log("❌ Error connecting to database:", err));
+// mongoose
+//   .connect(process.env.DB)
+//   .then(() => console.log("✅ Database connected successfully!"))
+//   .catch((err) => console.log("❌ Error connecting to database:", err));
 
 // Middleware
 app.use(express.json({ limit: "100mb" })); // JSON limit

@@ -23,8 +23,8 @@ const PaperList = () => {
       }
 
       const response = await axios.get(
-        "http://tpw.smartimmigrant.ai/api/v1/user/get-user",
-        // "http://localhost:5000/api/v1/user/get-user",
+        // "http://tpw.smartimmigrant.ai/api/v1/user/get-user",
+        "http://localhost:5000/api/v1/user/get-user",
         {
           headers: {
             token: `Bearer ${token}`,
@@ -34,6 +34,7 @@ const PaperList = () => {
 
       if (response.status === 200) {
         const data = response.data;
+        console.log(data, 123);
         setUser(data);
         setPaperList(data.papers);
       } else {
@@ -101,9 +102,9 @@ const PaperList = () => {
                       <img src={Paper1} alt="" className="h-20 w-20 p-2" />
                     </div>
                     <h1 className="text-gray-800 mb-3 p-2 text-center text-xl font-semibold">
-                      {paper.titleAndAuthors.title.length > 45
-                        ? `${paper.titleAndAuthors.title.slice(0, 45)}...`
-                        : paper.titleAndAuthors.title}
+                      {paper.title.length > 45
+                        ? `${paper.title.slice(0, 45)}...`
+                        : paper.title}
                     </h1>
                     <div className="flex justify-end w-full mt-auto px-4 pb-4">
                       <button

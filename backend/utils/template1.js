@@ -286,32 +286,49 @@ exports.Paper = async (data, user) => {
   }
   
   \\author{
-    ${
-      formData.titleAndAuthors.authors &&
-      formData.titleAndAuthors.authors.length > 0
-        ? formData.titleAndAuthors.authors
-            .map((author) => {
-              if (!author.name) return "";
-              return `
-  \\IEEEauthorblockN{${escapeText(author.name)}}
-  \\IEEEauthorblockA{
-  ${author.department ? `\\textit{${escapeText(author.department)}} \\\\` : ""}
   ${
-    author.organization
-      ? `\\textit{${escapeText(author.organization)}} \\\\`
-      : ""
+    formData.titleAndAuthors.authors &&
+    formData.titleAndAuthors.authors.length > 0
+      ? formData.titleAndAuthors.authors
+          .map((author) => {
+            if (!author.name) return ""; // Ensure author name exists
+
+            let authorBlock = `\\IEEEauthorblockN{${escapeText(
+              author.name
+            )}}\n`;
+            let details = [];
+
+            if (author.department) {
+              details.push(`\\textit{${escapeText(author.department)}}`);
+            }
+            if (author.organization) {
+              details.push(`\\textit{${escapeText(author.organization)}}`);
+            }
+            if (author.city || author.country) {
+              let location = `${escapeText(author.city || "")}`;
+              if (author.city && author.country) {
+                location += ", ";
+              }
+              location += escapeText(author.country || "");
+              details.push(location);
+            }
+            if (author.email) {
+              details.push(`${escapeText(author.email)}`);
+            }
+
+            // Only include \IEEEauthorblockA if there are details
+            if (details.length > 0) {
+              authorBlock += `\\IEEEauthorblockA{${details.join(" \\\\ ")}}\n`;
+            }
+
+            return authorBlock;
+          })
+          .filter(Boolean)
+          .join("\\and\n") // Separate multiple authors
+      : `\\IEEEauthorblockN{Anonymous}` // Fallback when no authors exist
   }
-  ${author.city ? `${escapeText(author.city)}, ` : ""}${escapeText(
-                author.country || ""
-              )} \\\\
-  ${escapeText(author.email || "")}}
-  `;
-            })
-            .filter(Boolean)
-            .join("\\and\n")
-        : ""
-    }
-  }
+}
+
   
   \\maketitle
   

@@ -10,7 +10,7 @@ exports.auth = (req, res, next) => {
 
     jwt.verify(token, JWT_SECRET, (err, user) => {
       if (err) {
-        return res.status(403).json({ message: "Invalid uset" });
+        return res.status(403).json({ message: "Invalid user" });
       }
       req.user = user;
       // console.log("user", user);
