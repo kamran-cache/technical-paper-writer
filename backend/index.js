@@ -22,7 +22,7 @@ const corsOptions = {
   origin: [
     "https://tpw.smartimmigrant.ai",
     //  "http://localhost:5173",
-    "https://app.smartimmigrant.ai/",
+    "https://app.smartimmigrant.ai",
   ], // Allow frontend URLs
   methods: ["GET", "POST", "DELETE", "PUT"],
   credentials: true,
